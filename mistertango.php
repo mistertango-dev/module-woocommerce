@@ -747,7 +747,9 @@ function wc_mistertango_pay_gateway()
                 $order_id = $transaction[0];
                 $order_info = new WC_Order($order_id);
                 $msg['class'] = "success";
-                $order_info->update_status('pending');
+                
+                //T.K.: New order already has pending status.
+                //$order_info->update_status('pending');
                 $this->addTransaction($transaction_id, $websocket_id, $order_id, $amount);
                 return true;
             }
