@@ -3,7 +3,7 @@
 Plugin Name: WooCommerce Mistertango Payment
 Plugin URI: https://mistertango.lt/
 Description: WooCommerce Mistertango Payment module
-Version: 2.0
+Version: 2.1
 Author: thairesearchinfotech.com
 Author URI: https://www.thairesearchinfotech.com/
 
