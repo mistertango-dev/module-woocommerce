@@ -331,7 +331,7 @@ function wc_mistertango_pay_gateway()
 
             $order_id   = absint(get_query_var('order-pay'));
             $username   = $this->username;
-            $time       = time();
+            $time       = date('Ymd');
 
             $payment_response_url           = WC()->api_request_url('WC_Mistertango');
             $mister_tango_process_check_url = add_query_arg('wooorderid', $order_id, add_query_arg('mistertangoprocess', "checkstatus", $payment_response_url));
@@ -340,7 +340,7 @@ function wc_mistertango_pay_gateway()
             $payment_response_offline_url   = add_query_arg('OfflinePayment', "yes", $payment_response_url);;
             $mister_tangoajax_submit_url    = WC()->cart->get_checkout_url();;
 
-            wp_localize_script('jquery', 'mrTangoUrlScript', urlencode("https://mistertango.com/resources/scripts/mt.collect.js?v=" . $time));
+            wp_localize_script('jquery', 'mrTangoUrlScript', urlencode("https://payment.mistertango.com/resources/scripts/mt.collect.js?v=" . $time));
             wp_localize_script('jquery', 'mrTangoUsername', $username);
             wp_localize_script('jquery', 'mrTangoUrlCallbackOffline', urlencode($payment_response_offline_url));
             wp_localize_script('jquery', 'mrTangoUrlConfirm', urlencode($mister_tango_url_confirm));
