@@ -134,7 +134,7 @@ function wc_mistertango_pay_gateway()
             $language       = $this->mistertango_language;
             $currency       = get_woocommerce_currency();
             $amount         = $order->get_total();
-            $billing_email  = $order->billing_email;
+            $billing_email  = $order->get_billing_email();
             $button_confirm = __('Click Here ', 'mistertango-woocommerce');
 
 //            unset($countries);
@@ -796,13 +796,13 @@ function wc_mistertango_pay_gateway()
             $result = "failure";
             $button_html = '';
 
-            if (isset($order->id)) {
-                $order_id_ajax = $order->id;
+            if ($order->get_id() != 0) {
+                $order_id_ajax = $order->get_id();
                 $result = "success";
                 $language = $this->mistertango_language;
                 $currency = get_woocommerce_currency();
                 $amount = $order->get_total();
-                $billing_email = $order->billing_email;
+                $billing_email = $order->get_billing_email();
                 $time = time();
                 $transaction_id = $order_id_ajax . '_' . $time;
                 $button_confirm = __('Checkout ', 'mistertango-woocommerce') . get_woocommerce_currency_symbol() . " " . $this->get_order_total();
@@ -820,7 +820,7 @@ function wc_mistertango_pay_gateway()
             echo wp_json_encode($return_data);
             die();
             // Return payment page
-            return array('result' => 'success', 'redirect' => add_query_arg('order', $order->id, add_query_arg('key', $order->order_key, get_permalink(wc_get_page_id('pay')))));
+            return array('result' => 'success', 'redirect' => add_query_arg('order', $order->id, add_query_arg('key', $order->get_order_key(), get_permalink(wc_get_page_id('pay')))));
         }
 
         /**
