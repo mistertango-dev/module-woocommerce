@@ -134,7 +134,7 @@ function wc_mistertango_pay_gateway()
             $language       = $this->mistertango_language;
             $currency       = get_woocommerce_currency();
             $amount         = $order->get_total();
-            $billing_email  = $order->get_billing_email();
+            $billing_email  = (method_exists($order, 'get_billing_email') ? $order->get_billing_email() : $order->billing_email);
             $button_confirm = __('Click Here ', 'mistertango-woocommerce');
 
 //            unset($countries);
@@ -795,14 +795,19 @@ function wc_mistertango_pay_gateway()
             $order_id_ajax = '';
             $result = "failure";
             $button_html = '';
+		
+	    if (method_exists($order, 'get_id'))
+		$oid = $order->get_id();
+	    else
+		$oid = (isset($order->id) ? $order->id : 0);
 
-            if ($order->get_id() != 0) {
-                $order_id_ajax = $order->get_id();
+            if ($oid != 0) {
+                $order_id_ajax = $oid;
                 $result = "success";
                 $language = $this->mistertango_language;
                 $currency = get_woocommerce_currency();
                 $amount = $order->get_total();
-                $billing_email = $order->get_billing_email();
+                $billing_email = (method_exists($order, 'get_billing_email') ? $order->get_billing_email() : $order->billing_email);
                 $time = time();
                 $transaction_id = $order_id_ajax . '_' . $time;
                 $button_confirm = __('Checkout ', 'mistertango-woocommerce') . get_woocommerce_currency_symbol() . " " . $this->get_order_total();
