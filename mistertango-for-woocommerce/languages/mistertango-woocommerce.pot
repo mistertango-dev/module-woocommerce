@@ -1,0 +1,282 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-09 08:34+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#: wc-mistertango.php:158
+#, php-format
+msgid ""
+"You are almost ready to accept payments. To get started, %1$sset your "
+"username and secret key%2$s."
+msgstr ""
+
+#: wc-mistertango.php:169 wc-mistertango.php:177 wc-mistertango.php:185
+#, php-format
+msgid "The minimum %1$s version required for this plugin is %2$s."
+msgstr ""
+
+#: wc-mistertango.php:169 wc-mistertango.php:177 wc-mistertango.php:185
+#, php-format
+msgid "You are running version %1$s."
+msgstr ""
+
+#: wc-mistertango.php:173
+#, php-format
+msgid "The plugin requires %1$s to be installed on your server."
+msgstr ""
+
+#: wc-mistertango.php:181
+#, php-format
+msgid "The plugin requires %1$s plugin to be activated."
+msgstr ""
+
+#: wc-mistertango.php:216
+msgid "Client support"
+msgstr ""
+
+#: includes/class-wc-mistertango.php:26
+#: includes/class-wc-gateway-mistertango.php:25
+msgid "Checkout"
+msgstr ""
+
+#: includes/class-wc-gateway-mistertango.php:24
+#, php-format
+msgid ""
+"%1$sSign up%2$s for Mistertango account and get your username and secret key."
+" If you need assistance, follow instructions on %3$ssupport website%4$s."
+msgstr ""
+
+#: includes/class-wc-gateway-mistertango.php:45
+#: includes/settings-mistertango.php:27 includes/settings-mistertango.php:28
+msgid "Bank transfer, credit card and other"
+msgstr ""
+
+#: includes/class-wc-gateway-mistertango.php:46
+#: includes/settings-mistertango.php:35 includes/settings-mistertango.php:36
+msgid "Payments collected by Mistertango."
+msgstr ""
+
+#: includes/class-wc-gateway-mistertango.php:266
+#: includes/class-wc-gateway-mistertango.php:268
+#, php-format
+msgid "%1$s: payment callback completed (%2$s) via %3$s."
+msgstr ""
+
+#: includes/settings-mistertango.php:17
+msgid "Enable/Disable"
+msgstr ""
+
+#: includes/settings-mistertango.php:18
+msgid "Enable Mistertango"
+msgstr ""
+
+#: includes/settings-mistertango.php:24
+msgid "Title"
+msgstr ""
+
+#: includes/settings-mistertango.php:25
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: includes/settings-mistertango.php:32
+msgid "Description"
+msgstr ""
+
+#: includes/settings-mistertango.php:33
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+#: includes/settings-mistertango.php:40 includes/settings-mistertango.php:43
+msgid "Username"
+msgstr ""
+
+#: includes/settings-mistertango.php:41
+msgid "Mistertango username."
+msgstr ""
+
+#: includes/settings-mistertango.php:48 includes/settings-mistertango.php:51
+msgid "Secret Key"
+msgstr ""
+
+#: includes/settings-mistertango.php:49
+msgid "Mistertango secret key."
+msgstr ""
+
+#: includes/settings-mistertango.php:56
+msgid "Country"
+msgstr ""
+
+#: includes/settings-mistertango.php:57
+msgid "Show payment methods only available for selected country."
+msgstr ""
+
+#: includes/settings-mistertango.php:61
+msgid "Lithuania"
+msgstr ""
+
+#: includes/settings-mistertango.php:62
+msgid "Latvia"
+msgstr ""
+
+#: includes/settings-mistertango.php:63
+msgid "Estonia"
+msgstr ""
+
+#: includes/settings-mistertango.php:64
+msgid "Finland"
+msgstr ""
+
+#: includes/settings-mistertango.php:65
+msgid "France"
+msgstr ""
+
+#: includes/settings-mistertango.php:66
+msgid "Netherlands"
+msgstr ""
+
+#: includes/settings-mistertango.php:67
+msgid "Italia"
+msgstr ""
+
+#: includes/settings-mistertango.php:68
+msgid "Spain"
+msgstr ""
+
+#: includes/settings-mistertango.php:69
+msgid "Slovakia"
+msgstr ""
+
+#: includes/settings-mistertango.php:70
+msgid "Germany"
+msgstr ""
+
+#: includes/settings-mistertango.php:75
+msgid "Language"
+msgstr ""
+
+#: includes/settings-mistertango.php:76
+msgid "Payment window language."
+msgstr ""
+
+#: includes/settings-mistertango.php:80
+msgid "Lithuanian"
+msgstr ""
+
+#: includes/settings-mistertango.php:81
+msgid "English"
+msgstr ""
+
+#: includes/settings-mistertango.php:82
+msgid "Latvian"
+msgstr ""
+
+#: includes/settings-mistertango.php:83
+msgid "Estonian"
+msgstr ""
+
+#: includes/settings-mistertango.php:84
+msgid "Russian"
+msgstr ""
+
+#: includes/settings-mistertango.php:85
+msgid "Finnish"
+msgstr ""
+
+#: includes/settings-mistertango.php:86
+msgid "French"
+msgstr ""
+
+#: includes/settings-mistertango.php:87
+msgid "Dutch"
+msgstr ""
+
+#: includes/settings-mistertango.php:88
+msgid "Italian"
+msgstr ""
+
+#: includes/settings-mistertango.php:89
+msgid "Spanish"
+msgstr ""
+
+#: includes/settings-mistertango.php:90
+msgid "Ukrainian"
+msgstr ""
+
+#: includes/settings-mistertango.php:91
+msgid "Hungarian"
+msgstr ""
+
+#: includes/settings-mistertango.php:92
+msgid "Romanian"
+msgstr ""
+
+#: includes/settings-mistertango.php:93
+msgid "Bulgarian"
+msgstr ""
+
+#: includes/settings-mistertango.php:94
+msgid "Czech"
+msgstr ""
+
+#: includes/settings-mistertango.php:95
+msgid "Slovak"
+msgstr ""
+
+#: includes/settings-mistertango.php:96
+msgid "German"
+msgstr ""
+
+#: includes/settings-mistertango.php:101
+msgid "Auto Detect Language"
+msgstr ""
+
+#: includes/settings-mistertango.php:102
+msgid "Automatically detect website language"
+msgstr ""
+
+#: includes/settings-mistertango.php:103
+msgid ""
+"Enable this option if your website is multilingual. If the required language "
+"is not supported, it will falback to default language which is selected "
+"above."
+msgstr ""
+
+#: includes/settings-mistertango.php:108
+msgid "Overwrite Callback URL"
+msgstr ""
+
+#: includes/settings-mistertango.php:109
+msgid "Overwrite default callback URL by ignoring it"
+msgstr ""
+
+#: includes/settings-mistertango.php:110
+msgid ""
+"If you are using Mistertango on multiple websites, you should enable this "
+"option."
+msgstr ""
+
+#: includes/settings-mistertango.php:115
+msgid "Debug Log"
+msgstr ""
+
+#: includes/settings-mistertango.php:116
+msgid "Enable logging"
+msgstr ""
+
+#: includes/settings-mistertango.php:117
+#, php-format
+msgid ""
+"Save debug messages to WooCommerce System Status log. You can view logs "
+"%1$shere%2$s."
+msgstr ""
