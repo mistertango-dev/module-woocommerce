@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Mistertango for WooCommerce
- * Plugin URI: https://novatemple.com
+ * Plugin URI: https://mistertango.com
  * Description: Accept credit cards, debit cards, online bank payments and Bitcoins on your WooCommerce store.
- * Version: 3.0.0
+ * Version: 3.1.0
  * Author: NovaTemple
  * Author URI: https://novatemple.com
  * License: GPLv2 or later
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Main constants.
  */
 define( 'WC_MISTERTANGO_NAME', 'Mistertango' );
-define( 'WC_MISTERTANGO_VERSION', '3.0.0' );
+define( 'WC_MISTERTANGO_VERSION', '3.1.0' );
 define( 'WC_MISTERTANGO_URL_WEBSITE', 'https://mistertango.com' );
 define( 'WC_MISTERTANGO_URL_SUPPORT_CLIENT', 'https://mistertango.freshdesk.com' );
 define( 'WC_MISTERTANGO_URL_API_JS', 'https://payment.mistertango.com/resources/scripts/mt.collect.js' );

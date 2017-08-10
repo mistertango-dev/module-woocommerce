@@ -65,6 +65,12 @@ Regarding payment issues please contact customer support at [Mistertango.com](ht
 
 == Changelog ==
 
+= 3.1.0 =
+
+Release Date: August 10th, 2017
+
+* Compatibility with WordPress.org guidelines.
+
 = 3.0.0 =
 
 Release Date: August 9th, 2017
