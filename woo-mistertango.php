@@ -25,13 +25,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 define( 'WC_MISTERTANGO_NAME', 'Mistertango' );
 define( 'WC_MISTERTANGO_VERSION', '3.1.2' );
-define( 'WC_MISTERTANGO_URL_WEBSITE', 'https://mistertango.com' );
-define( 'WC_MISTERTANGO_URL_SUPPORT_CLIENT', 'https://mistertango.freshdesk.com' );
-define( 'WC_MISTERTANGO_URL_API_JS', 'https://payment.mistertango.com/resources/scripts/mt.collect.js' );
 
 define( 'WC_MISTERTANGO_MIN_PHP', '5.3.0' );
 define( 'WC_MISTERTANGO_MIN_WP', '3.5.0' );
 define( 'WC_MISTERTANGO_MIN_WC', '2.0.0' );
+
+define( 'WC_MISTERTANGO_URL_WEBSITE', 'https://mistertango.com' );
+define( 'WC_MISTERTANGO_URL_API_JS', 'https://payment.mistertango.com/resources/scripts/mt.collect.js' );
+define( 'WC_MISTERTANGO_URL_CLIENT_SUPPORT', 'https://uabmistertango.freshdesk.com' );
+define( 'WC_MISTERTANGO_URL_CLIENT_SUPPORT_LT', 'https://mistertango.freshdesk.com' );
 
 define( 'WC_MISTERTANGO_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'WC_MISTERTANGO_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
@@ -189,7 +191,14 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		 */
 		public function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
 			if ( plugin_basename( __FILE__ ) == $plugin_file ) {
-				$plugin_meta[] = '<a href="' . esc_url( WC_MISTERTANGO_URL_SUPPORT_CLIENT ) . '" target="_blank">' . __( 'Client support', 'mistertango-woocommerce' ) . '</a>';
+				$support_url = WC_MISTERTANGO_URL_CLIENT_SUPPORT;
+				list( $lang ) = explode( '_', get_locale() );
+
+				if ( 'lt' == $lang ) {
+					$support_url = WC_MISTERTANGO_URL_CLIENT_SUPPORT_LT;
+				}
+
+				$plugin_meta[] = '<a href="' . esc_url( $support_url ) . '" target="_blank">' . __( 'Client support', 'mistertango-woocommerce' ) . '</a>';
 			}
 
 			return $plugin_meta;
