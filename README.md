@@ -58,7 +58,7 @@ Currently payment gateway supports accepting payments only in Euros.
 
 ### Where can I get support?
 
-Regarding payment issues please contact customer support on [Mistertango.com](https://mistertango.com).
+Regarding payment issues please contact customer support on [Mistertango Support Center](https://uabmistertango.freshdesk.com).
 
 If you get stuck with the plugin, you can ask for help on [the plugin forum](https://wordpress.org/support/plugin/woo-mistertango).
 

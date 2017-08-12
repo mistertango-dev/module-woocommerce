@@ -32,6 +32,7 @@ define( 'WC_MISTERTANGO_MIN_WC', '2.0.0' );
 
 define( 'WC_MISTERTANGO_URL_WEBSITE', 'https://mistertango.com' );
 define( 'WC_MISTERTANGO_URL_API_JS', 'https://payment.mistertango.com/resources/scripts/mt.collect.js' );
+define( 'WC_MISTERTANGO_URL_PLUGIN_SUPPORT', 'https://wordpress.org/support/plugin/woo-mistertango' );
 define( 'WC_MISTERTANGO_URL_CLIENT_SUPPORT', 'https://uabmistertango.freshdesk.com' );
 define( 'WC_MISTERTANGO_URL_CLIENT_SUPPORT_LT', 'https://mistertango.freshdesk.com' );
 
@@ -191,6 +192,8 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		 */
 		public function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
 			if ( plugin_basename( __FILE__ ) == $plugin_file ) {
+				$plugin_meta[] = '<a href="' . esc_url( WC_MISTERTANGO_URL_PLUGIN_SUPPORT ) . '" target="_blank">' . __( 'Plugin support', 'mistertango-woocommerce' ) . '</a>';
+
 				$support_url = WC_MISTERTANGO_URL_CLIENT_SUPPORT;
 				list( $lang ) = explode( '_', get_locale() );
 
