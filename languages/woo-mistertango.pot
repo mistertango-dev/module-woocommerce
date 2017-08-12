@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-09 08:34+0000\n"
+"POT-Creation-Date: 2017-08-12 21:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,61 +14,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: wc-mistertango.php:158
+#: woo-mistertango.php:149
 #, php-format
 msgid ""
 "You are almost ready to accept payments. To get started, %1$sset your "
 "username and secret key%2$s."
 msgstr ""
 
-#: wc-mistertango.php:169 wc-mistertango.php:177 wc-mistertango.php:185
+#: woo-mistertango.php:160 woo-mistertango.php:168 woo-mistertango.php:176
 #, php-format
 msgid "The minimum %1$s version required for this plugin is %2$s."
 msgstr ""
 
-#: wc-mistertango.php:169 wc-mistertango.php:177 wc-mistertango.php:185
+#: woo-mistertango.php:160 woo-mistertango.php:168 woo-mistertango.php:176
 #, php-format
-msgid "You are running version %1$s."
+msgid "You are running version %s."
 msgstr ""
 
-#: wc-mistertango.php:173
+#: woo-mistertango.php:164
 #, php-format
-msgid "The plugin requires %1$s to be installed on your server."
+msgid "The plugin requires %s to be installed on your server."
 msgstr ""
 
-#: wc-mistertango.php:181
+#: woo-mistertango.php:172
 #, php-format
-msgid "The plugin requires %1$s plugin to be activated."
+msgid "The plugin requires %s plugin to be activated."
 msgstr ""
 
-#: wc-mistertango.php:216
+#: woo-mistertango.php:196
+msgid "Plugin support"
+msgstr ""
+
+#: woo-mistertango.php:205
 msgid "Client support"
 msgstr ""
 
-#: includes/class-wc-mistertango.php:26
-#: includes/class-wc-gateway-mistertango.php:25
-msgid "Checkout"
-msgstr ""
-
-#: includes/class-wc-gateway-mistertango.php:24
+#: includes/class-wc-gateway-mistertango.php:35
 #, php-format
 msgid ""
 "%1$sSign up%2$s for Mistertango account and get your username and secret key."
 " If you need assistance, follow instructions on %3$ssupport website%4$s."
 msgstr ""
 
-#: includes/class-wc-gateway-mistertango.php:45
+#: includes/class-wc-gateway-mistertango.php:38
+msgid "Checkout"
+msgstr ""
+
+#: includes/class-wc-gateway-mistertango.php:58
 #: includes/settings-mistertango.php:27 includes/settings-mistertango.php:28
 msgid "Bank transfer, credit card and other"
 msgstr ""
 
-#: includes/class-wc-gateway-mistertango.php:46
+#: includes/class-wc-gateway-mistertango.php:59
 #: includes/settings-mistertango.php:35 includes/settings-mistertango.php:36
 msgid "Payments collected by Mistertango."
 msgstr ""
 
-#: includes/class-wc-gateway-mistertango.php:266
-#: includes/class-wc-gateway-mistertango.php:268
+#: includes/class-wc-gateway-mistertango.php:281
 #, php-format
 msgid "%1$s: payment callback completed (%2$s) via %3$s."
 msgstr ""
@@ -114,11 +116,14 @@ msgid "Mistertango secret key."
 msgstr ""
 
 #: includes/settings-mistertango.php:56
-msgid "Country"
+msgid "Default Country"
 msgstr ""
 
 #: includes/settings-mistertango.php:57
-msgid "Show payment methods only available for selected country."
+msgid ""
+"By default, show payment methods available for the selected country only. "
+"Anyway, the user during checkout will have an ability to change the country "
+"by oneself."
 msgstr ""
 
 #: includes/settings-mistertango.php:61
@@ -162,11 +167,11 @@ msgid "Germany"
 msgstr ""
 
 #: includes/settings-mistertango.php:75
-msgid "Language"
+msgid "Default Language"
 msgstr ""
 
 #: includes/settings-mistertango.php:76
-msgid "Payment window language."
+msgid "Default payment window language."
 msgstr ""
 
 #: includes/settings-mistertango.php:80
@@ -247,9 +252,9 @@ msgstr ""
 
 #: includes/settings-mistertango.php:103
 msgid ""
-"Enable this option if your website is multilingual. If the required language "
-"is not supported, it will falback to default language which is selected "
-"above."
+"Show the payment window in a website language. If the required language is "
+"not supported, it will falback to a default selected language. Enable this "
+"option if your website is multilingual."
 msgstr ""
 
 #: includes/settings-mistertango.php:108
@@ -257,13 +262,14 @@ msgid "Overwrite Callback URL"
 msgstr ""
 
 #: includes/settings-mistertango.php:109
-msgid "Overwrite default callback URL by ignoring it"
+msgid "Overwrite default callback URL"
 msgstr ""
 
 #: includes/settings-mistertango.php:110
 msgid ""
-"If you are using Mistertango on multiple websites, you should enable this "
-"option."
+"Mistertango API will ignore the default callback URL which is set on your "
+"account and will use a callback URL provided by the plugin. If you are using "
+"Mistertango on multiple websites, you should enable this option."
 msgstr ""
 
 #: includes/settings-mistertango.php:115
@@ -277,6 +283,28 @@ msgstr ""
 #: includes/settings-mistertango.php:117
 #, php-format
 msgid ""
-"Save debug messages to WooCommerce System Status log. You can view logs "
-"%1$shere%2$s."
+"Save debug messages to WooCommerce system status log. You can %1$sview logs "
+"here%2$s."
+msgstr ""
+
+#. Name of the plugin
+msgid "Mistertango for WooCommerce"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Accept credit cards, debit cards, online bank payments and Bitcoins on your "
+"WooCommerce store."
+msgstr ""
+
+#. URI of the plugin
+msgid "https://mistertango.com"
+msgstr ""
+
+#. Author of the plugin
+msgid "NovaTemple"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://novatemple.com"
 msgstr ""

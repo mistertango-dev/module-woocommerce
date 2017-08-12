@@ -3,14 +3,14 @@
  * Plugin Name: Mistertango for WooCommerce
  * Plugin URI: https://mistertango.com
  * Description: Accept credit cards, debit cards, online bank payments and Bitcoins on your WooCommerce store.
- * Version: 3.1.2
+ * Version: 3.1.3
  * Author: NovaTemple
  * Author URI: https://novatemple.com
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  *
- * Text Domain: mistertango-woocommerce
- * Domain Path: /languages/
+ * Text Domain: woo-mistertango
+ * Domain Path: /languages
  *
  * @package WC_Plugin_Mistertango
  * @author NovaTemple
@@ -24,13 +24,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Main constants.
  */
 define( 'WC_MISTERTANGO_NAME', 'Mistertango' );
-define( 'WC_MISTERTANGO_VERSION', '3.1.2' );
+define( 'WC_MISTERTANGO_VERSION', '3.1.3' );
 
 define( 'WC_MISTERTANGO_MIN_PHP', '5.3.0' );
 define( 'WC_MISTERTANGO_MIN_WP', '3.5.0' );
 define( 'WC_MISTERTANGO_MIN_WC', '2.0.0' );
 
 define( 'WC_MISTERTANGO_URL_WEBSITE', 'https://mistertango.com' );
+define( 'WC_MISTERTANGO_URL_WEBSITE_LT', 'https://mistertango.lt' );
 define( 'WC_MISTERTANGO_URL_API_JS', 'https://payment.mistertango.com/resources/scripts/mt.collect.js' );
 define( 'WC_MISTERTANGO_URL_PLUGIN_SUPPORT', 'https://wordpress.org/support/plugin/woo-mistertango' );
 define( 'WC_MISTERTANGO_URL_CLIENT_SUPPORT', 'https://uabmistertango.freshdesk.com' );
@@ -145,7 +146,7 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 			$is_plugin_section = isset( $_GET['page'], $_GET['section'] ) && 'wc-settings' === $_GET['page'] && $this->get_setting_section_slug() === $_GET['section'];
 
 			if ( ( false === $gateway_settings || ( 'yes' === $gateway_settings['enabled'] && ( empty( $gateway_settings['username'] ) || empty( $gateway_settings['secret_key'] ) ) ) ) && ! $is_plugin_section ) {
-				$this->add_admin_notice( 'prompt_connect', 'warning', sprintf( __( 'You are almost ready to accept payments. To get started, %1$sset your username and secret key%2$s.', 'mistertango-woocommerce' ), '<a href="' . esc_url( $this->get_setting_link() ) . '">', '</a>' ) );
+				$this->add_admin_notice( 'prompt_connect', 'warning', sprintf( __( 'You are almost ready to accept payments. To get started, %1$sset your username and secret key%2$s.', 'woo-mistertango' ), '<a href="' . esc_url( $this->get_setting_link() ) . '">', '</a>' ) );
 			}
 		}
 
@@ -156,23 +157,23 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		 */
 		static function get_environment_warning() {
 			if ( version_compare( phpversion(), WC_MISTERTANGO_MIN_PHP, '<' ) ) {
-				return sprintf( __( 'The minimum %1$s version required for this plugin is %2$s.', 'mistertango-woocommerce' ), 'PHP', WC_MISTERTANGO_MIN_PHP ) . ' ' . sprintf( __( 'You are running version %1$s.', 'mistertango-woocommerce' ), phpversion() );
+				return sprintf( esc_html__( 'The minimum %1$s version required for this plugin is %2$s.', 'woo-mistertango' ), 'PHP', WC_MISTERTANGO_MIN_PHP ) . ' ' . sprintf( esc_html__( 'You are running version %s.', 'woo-mistertango' ), phpversion() );
 			}
 
 			if ( ! function_exists( 'mcrypt_encrypt' ) ) {
-				return sprintf( __( 'The plugin requires %1$s to be installed on your server.', 'mistertango-woocommerce' ), 'Mcrypt' );
+				return sprintf( esc_html__( 'The plugin requires %s to be installed on your server.', 'woo-mistertango' ), 'Mcrypt' );
 			}
 
 			if ( version_compare( $GLOBALS['wp_version'], WC_MISTERTANGO_MIN_WP, '<' ) ) {
-				return sprintf( __( 'The minimum %1$s version required for this plugin is %2$s.', 'mistertango-woocommerce' ), 'WordPress', WC_MISTERTANGO_MIN_WP ) . ' ' . sprintf( __( 'You are running version %1$s.', 'mistertango-woocommerce' ), $GLOBALS['wp_version'] );
+				return sprintf( esc_html__( 'The minimum %1$s version required for this plugin is %2$s.', 'woo-mistertango' ), 'WordPress', WC_MISTERTANGO_MIN_WP ) . ' ' . sprintf( esc_html__( 'You are running version %s.', 'woo-mistertango' ), $GLOBALS['wp_version'] );
 			}
 
 			if ( ! defined( 'WC_VERSION' ) ) {
-				return sprintf( __( 'The plugin requires %1$s plugin to be activated.', 'mistertango-woocommerce' ), 'WooCommerce' );
+				return sprintf( esc_html__( 'The plugin requires %s plugin to be activated.', 'woo-mistertango' ), 'WooCommerce' );
 			}
 
 			if ( version_compare( WC_VERSION, WC_MISTERTANGO_MIN_WC, '<' ) ) {
-				return sprintf( __( 'The minimum %1$s version required for this plugin is %2$s.', 'mistertango-woocommerce' ), 'WooCommerce', WC_MISTERTANGO_MIN_WC ) . ' ' . sprintf( __( 'You are running version %1$s.', 'mistertango-woocommerce' ), WC_VERSION );
+				return sprintf( esc_html__( 'The minimum %1$s version required for this plugin is %2$s.', 'woo-mistertango' ), 'WooCommerce', WC_MISTERTANGO_MIN_WC ) . ' ' . sprintf( esc_html__( 'You are running version %s.', 'woo-mistertango' ), WC_VERSION );
 			}
 
 			return false;
@@ -183,7 +184,7 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		 */
 		public function plugin_action_links( $actions, $plugin_file, $plugin_data, $context ) {
 			return array_merge( array(
-				'<a href="' . esc_url( $this->get_setting_link() ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>',
+				'<a href="' . esc_url( $this->get_setting_link() ) . '">' . esc_html__( 'Settings', 'woocommerce' ) . '</a>',
 			), $actions );
 		}
 
@@ -192,7 +193,7 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		 */
 		public function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
 			if ( plugin_basename( __FILE__ ) == $plugin_file ) {
-				$plugin_meta[] = '<a href="' . esc_url( WC_MISTERTANGO_URL_PLUGIN_SUPPORT ) . '" target="_blank">' . __( 'Plugin support', 'mistertango-woocommerce' ) . '</a>';
+				$plugin_meta[] = '<a href="' . esc_url( WC_MISTERTANGO_URL_PLUGIN_SUPPORT ) . '" target="_blank">' . esc_html__( 'Plugin support', 'woo-mistertango' ) . '</a>';
 
 				$support_url = WC_MISTERTANGO_URL_CLIENT_SUPPORT;
 				list( $lang ) = explode( '_', get_locale() );
@@ -201,7 +202,7 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 					$support_url = WC_MISTERTANGO_URL_CLIENT_SUPPORT_LT;
 				}
 
-				$plugin_meta[] = '<a href="' . esc_url( $support_url ) . '" target="_blank">' . __( 'Client support', 'mistertango-woocommerce' ) . '</a>';
+				$plugin_meta[] = '<a href="' . esc_url( $support_url ) . '" target="_blank">' . esc_html__( 'Client support', 'woo-mistertango' ) . '</a>';
 			}
 
 			return $plugin_meta;
@@ -268,7 +269,7 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 
 			require_once( WC_MISTERTANGO_PATH . '/includes/class-wc-gateway-mistertango.php' );
 
-			load_plugin_textdomain( 'mistertango-woocommerce', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+			load_plugin_textdomain( 'woo-mistertango', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
 
 			add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
 		}

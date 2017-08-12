@@ -19,22 +19,22 @@ Accept payments via online bank, credit card (Visa, MasterCard), Bitcoins or by 
 
 Mistertango plugin extends WooCommerce allowing you to take payments on your store via Mistertango API.
 
-To use this plugin, register on [Mistertango.com](https://mistertango.com) and enable API on your account to accept payments on your WooCommerce store.
+To use this plugin, sign up on [Mistertango.com](https://mistertango.com) and enable API on your account to accept payments on your WooCommerce store.
 
 ## Installation
 
-### Minimum Requirements
+### Minimum requirements
 
 * WordPress 3.5 or greater.
 * WooCommerce 2.0 or greater.
 * PHP 5.3 or greater.
 * Mcrypt
 
-### Register Account
+### Sign up
 
-To use this plugin, register on [Mistertango.com](https://mistertango.com) and enable API on your account to accept payments on your WooCommerce store.
+To use this plugin, sign up on [Mistertango.com](https://mistertango.com) and enable API on your account to accept payments on your WooCommerce store.
 
-### From within WordPress
+### Install - from within WordPress
 
 1. Visit "Plugins > Add New".
 2. Search for "Mistertango for WooCommerce".
@@ -43,7 +43,7 @@ To use this plugin, register on [Mistertango.com](https://mistertango.com) and e
 5. You should see a notice how to start "Mistertango for WooCommerce" configuration.
 6. Go through the configuration steps and set up the plugin for your site.
 
-### Manually
+### Install - manually
 
 1. Upload the `woo-mistertango` folder to the `/wp-content/plugins/` directory.
 2. Activate "Mistertango for WooCommerce" plugin from your Plugins page.
@@ -61,6 +61,13 @@ Currently payment gateway supports accepting payments only in Euros.
 Regarding payment issues please contact customer support on [Mistertango Support Center](https://uabmistertango.freshdesk.com).
 
 If you get stuck with the plugin, you can ask for help on [the plugin forum](https://wordpress.org/support/plugin/woo-mistertango).
+
+### Can I contribute to this plugin?
+
+Yes, community made patches, bug reports, localizations (translations) and other contributions are always welcome.
+
+* Submit your ideas and bug reports on [the plugin forum](https://wordpress.org/support/plugin/woo-mistertango).
+* Want to add a new language? Awesome! You can contribute on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/woo-mistertango).
 
 ## License
 

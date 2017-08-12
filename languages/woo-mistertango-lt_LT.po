@@ -1,0 +1,329 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Mistertango for WooCommerce\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-12 21:01+0000\n"
+"PO-Revision-Date: 2017-08-12 21:02+0000\n"
+"Last-Translator: NovaTemple <hi@novatemple.com>\n"
+"Language-Team: Lithuanian\n"
+"Language: lt-LT\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 "
+"&&(n%100<10||n%100 >= 20)? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#: includes/settings-mistertango.php:103
+msgid ""
+"Show the payment window in a website language. If the required language is "
+"not supported, it will falback to a default selected language. Enable this "
+"option if your website is multilingual."
+msgstr ""
+"Rodyti mokėjimo langą svetainės kalba. Jei reikalinga kalba nepalaikoma, bus "
+"naudojama pasirinkta numatytoji kalba. Įjunkite šį nustatymą, jei jūsų "
+"svetainė palaiko daugiakalbiškumą."
+
+#: woo-mistertango.php:149
+#, php-format
+msgid ""
+"You are almost ready to accept payments. To get started, %1$sset your "
+"username and secret key%2$s."
+msgstr ""
+"Jūs beveik pasirengę priimti mokėjimus. Norėdami pradėti, %1$snustatykite "
+"savo vartotojo vardą ir slaptą raktą%2$s."
+
+#: woo-mistertango.php:160 woo-mistertango.php:168 woo-mistertango.php:176
+#, php-format
+msgid "The minimum %1$s version required for this plugin is %2$s."
+msgstr "Minimali reikalaujama %1$s versija šiam įskiepiui yra %2$s."
+
+#: woo-mistertango.php:160 woo-mistertango.php:168 woo-mistertango.php:176
+#, php-format
+msgid "You are running version %s."
+msgstr "Jūs naudojate versiją %s."
+
+#: woo-mistertango.php:164
+#, php-format
+msgid "The plugin requires %s to be installed on your server."
+msgstr "Įskiepiui reikalingas įdiegtas %s jūsų serveryje."
+
+#: woo-mistertango.php:172
+#, php-format
+msgid "The plugin requires %s plugin to be activated."
+msgstr "Įskiepiui reikalingas aktyvuotas %s įskiepis."
+
+#: woo-mistertango.php:196
+msgid "Plugin support"
+msgstr "Įskiepio pagalba"
+
+#: woo-mistertango.php:205
+msgid "Client support"
+msgstr "Pagalba klientams"
+
+#: includes/class-wc-gateway-mistertango.php:35
+#, php-format
+msgid ""
+"%1$sSign up%2$s for Mistertango account and get your username and secret key."
+" If you need assistance, follow instructions on %3$ssupport website%4$s."
+msgstr ""
+"%1$sUžsiregistruokite%2$s Mistertango paskyrą ir gaukite savo vartotojo "
+"vardą ir slaptą raktą. Jei jums reikalinga pagalba, sekite instrukcijas "
+"%3$spagalbos svetainėje%4$s."
+
+#: includes/class-wc-gateway-mistertango.php:38
+msgid "Checkout"
+msgstr "Apmokėti"
+
+#: includes/class-wc-gateway-mistertango.php:58
+#: includes/settings-mistertango.php:27 includes/settings-mistertango.php:28
+msgid "Bank transfer, credit card and other"
+msgstr "Banko mokėjimai, kortelės ir kiti"
+
+#: includes/class-wc-gateway-mistertango.php:59
+#: includes/settings-mistertango.php:35 includes/settings-mistertango.php:36
+msgid "Payments collected by Mistertango."
+msgstr "Mokėjimus surenka Mistertango."
+
+#: includes/class-wc-gateway-mistertango.php:281
+#, php-format
+msgid "%1$s: payment callback completed (%2$s) via %3$s."
+msgstr "%1$s: mokėjimo atsakymas įvykdytas (%2$s) per %3$s."
+
+#: includes/settings-mistertango.php:17
+msgid "Enable/Disable"
+msgstr "Įjungti/Išjungti"
+
+#: includes/settings-mistertango.php:18
+msgid "Enable Mistertango"
+msgstr "Įjungti Mistertango"
+
+#: includes/settings-mistertango.php:24
+msgid "Title"
+msgstr "Pavadinimas"
+
+#: includes/settings-mistertango.php:25
+msgid "This controls the title which the user sees during checkout."
+msgstr "Mokėjimo būdo pavadinimas, rodomas vartotojui atsiskaitant."
+
+#: includes/settings-mistertango.php:32
+msgid "Description"
+msgstr "Aprašymas"
+
+#: includes/settings-mistertango.php:33
+msgid "This controls the description which the user sees during checkout."
+msgstr "Mokėjimo būdo aprašymas, rodomas vartotojui atsiskaitant."
+
+#: includes/settings-mistertango.php:40 includes/settings-mistertango.php:43
+msgid "Username"
+msgstr "Vartotojo Vardas"
+
+#: includes/settings-mistertango.php:41
+msgid "Mistertango username."
+msgstr "Mistertango vartotojo vardas."
+
+#: includes/settings-mistertango.php:48 includes/settings-mistertango.php:51
+msgid "Secret Key"
+msgstr "Slaptas Raktas"
+
+#: includes/settings-mistertango.php:49
+msgid "Mistertango secret key."
+msgstr "Mistertango slaptas raktas."
+
+#: includes/settings-mistertango.php:56
+msgid "Default Country"
+msgstr "Numatytoji Šalis"
+
+#: includes/settings-mistertango.php:57
+msgid ""
+"By default, show payment methods available for the selected country only. "
+"Anyway, the user during checkout will have an ability to change the country "
+"by oneself."
+msgstr ""
+"Pagal nutylėjimą, rodyti mokėjimo būdus, kurie galimi tik pasirinktai šaliai."
+" Bet kokiu atveju, vartotojas atsiskaitymo metu turės galimybę pakeisti šalį "
+"pats."
+
+#: includes/settings-mistertango.php:61
+msgid "Lithuania"
+msgstr "Lietuva"
+
+#: includes/settings-mistertango.php:62
+msgid "Latvia"
+msgstr "Latvija"
+
+#: includes/settings-mistertango.php:63
+msgid "Estonia"
+msgstr "Estija"
+
+#: includes/settings-mistertango.php:64
+msgid "Finland"
+msgstr "Suomija"
+
+#: includes/settings-mistertango.php:65
+msgid "France"
+msgstr "Prancūzija"
+
+#: includes/settings-mistertango.php:66
+msgid "Netherlands"
+msgstr "Olandija"
+
+#: includes/settings-mistertango.php:67
+msgid "Italia"
+msgstr "Italija"
+
+#: includes/settings-mistertango.php:68
+msgid "Spain"
+msgstr "Ispanija"
+
+#: includes/settings-mistertango.php:69
+msgid "Slovakia"
+msgstr "Slovakija"
+
+#: includes/settings-mistertango.php:70
+msgid "Germany"
+msgstr "Vokietija"
+
+#: includes/settings-mistertango.php:75
+msgid "Default Language"
+msgstr "Numatytoji Kalba"
+
+#: includes/settings-mistertango.php:76
+msgid "Default payment window language."
+msgstr "Numatytoji mokėjimo lango kalba."
+
+#: includes/settings-mistertango.php:80
+msgid "Lithuanian"
+msgstr "Lietuvių"
+
+#: includes/settings-mistertango.php:81
+msgid "English"
+msgstr "Anglų"
+
+#: includes/settings-mistertango.php:82
+msgid "Latvian"
+msgstr "Latvių"
+
+#: includes/settings-mistertango.php:83
+msgid "Estonian"
+msgstr "Estų"
+
+#: includes/settings-mistertango.php:84
+msgid "Russian"
+msgstr "Rusų"
+
+#: includes/settings-mistertango.php:85
+msgid "Finnish"
+msgstr "Suomių"
+
+#: includes/settings-mistertango.php:86
+msgid "French"
+msgstr "Prancūzų"
+
+#: includes/settings-mistertango.php:87
+msgid "Dutch"
+msgstr "Olandų"
+
+#: includes/settings-mistertango.php:88
+msgid "Italian"
+msgstr "Italų"
+
+#: includes/settings-mistertango.php:89
+msgid "Spanish"
+msgstr "Ispanų"
+
+#: includes/settings-mistertango.php:90
+msgid "Ukrainian"
+msgstr "Ukrainiečių"
+
+#: includes/settings-mistertango.php:91
+msgid "Hungarian"
+msgstr "Vengrų"
+
+#: includes/settings-mistertango.php:92
+msgid "Romanian"
+msgstr "Rumunų"
+
+#: includes/settings-mistertango.php:93
+msgid "Bulgarian"
+msgstr "Bulgarų"
+
+#: includes/settings-mistertango.php:94
+msgid "Czech"
+msgstr "Čekų"
+
+#: includes/settings-mistertango.php:95
+msgid "Slovak"
+msgstr "Slovakų"
+
+#: includes/settings-mistertango.php:96
+msgid "German"
+msgstr "Vokiečių"
+
+#: includes/settings-mistertango.php:101
+msgid "Auto Detect Language"
+msgstr "Automatinis Kalbos Aptikimas"
+
+#: includes/settings-mistertango.php:102
+msgid "Automatically detect website language"
+msgstr "Automatiškai aptikti svetainės kalbą"
+
+#: includes/settings-mistertango.php:108
+msgid "Overwrite Callback URL"
+msgstr "Perrašyti Atsakymo URL"
+
+#: includes/settings-mistertango.php:109
+msgid "Overwrite default callback URL"
+msgstr "Perrašyti numatytąjį atsakymo URL"
+
+#: includes/settings-mistertango.php:110
+msgid ""
+"Mistertango API will ignore the default callback URL which is set on your "
+"account and will use a callback URL provided by the plugin. If you are using "
+"Mistertango on multiple websites, you should enable this option."
+msgstr ""
+"Mistertango API ignoruos numatytąjį atsakymo URL, kuris yra nustatytas jūsų "
+"paskyroje ir naudos atsakymo URL, kurį pateikia įskiepis. Jei jūs naudojate "
+"Mistertango keliose ar daugiau svetainių, jūs turėtumėte įjungti šį "
+"nustatymą."
+
+#: includes/settings-mistertango.php:115
+msgid "Debug Log"
+msgstr "Testavimo Žurnalas"
+
+#: includes/settings-mistertango.php:116
+msgid "Enable logging"
+msgstr "Įjungti žurnalą"
+
+#: includes/settings-mistertango.php:117
+#, php-format
+msgid ""
+"Save debug messages to WooCommerce system status log. You can %1$sview logs "
+"here%2$s."
+msgstr ""
+"Išsaugoti testavimo pranešimus į WooCommerce statuso žurnalą. Jūs galite "
+"%1$speržiūrėti žurnalą čia%2$s."
+
+#. Name of the plugin
+msgid "Mistertango for WooCommerce"
+msgstr "Mistertango for WooCommerce"
+
+#. Description of the plugin
+msgid ""
+"Accept credit cards, debit cards, online bank payments and Bitcoins on your "
+"WooCommerce store."
+msgstr ""
+"Priimkite įmokas kortelėmis, internetine bankininkyste ir Bitcoin'ais savo "
+"WooCommerce parduotuvėje."
+
+#. URI of the plugin
+msgid "https://mistertango.com"
+msgstr "https://mistertango.lt"
+
+#. Author of the plugin
+msgid "NovaTemple"
+msgstr "NovaTemple"
+
+#. Author URI of the plugin
+msgid "https://novatemple.com"
+msgstr "https://novatemple.com"

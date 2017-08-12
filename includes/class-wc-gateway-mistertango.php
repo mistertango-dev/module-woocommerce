@@ -1,6 +1,6 @@
 <?php
 /**
-* @package WC_Mistertango_Plugin
+* @package WC_Plugin_Mistertango
 * @author NovaTemple
 */
 
@@ -20,9 +20,22 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  	public function __construct() {
  		$this->id                 = 'mistertango';
  		$this->has_fields         = false;
+
+		$signup_url = WC_MISTERTANGO_URL_WEBSITE;
+		$support_url = WC_MISTERTANGO_URL_CLIENT_SUPPORT;
+
+		list( $lang ) = explode( '_', get_locale() );
+
+		if ( 'lt' == $lang ) {
+			$signup_url = WC_MISTERTANGO_URL_WEBSITE_LT;
+			$support_url = WC_MISTERTANGO_URL_CLIENT_SUPPORT_LT;
+		}
+
  		$this->method_title       = 'Mistertango';
- 		$this->method_description = sprintf( __( '%1$sSign up%2$s for Mistertango account and get your username and secret key. If you need assistance, follow instructions on %3$ssupport website%4$s.', 'mistertango-woocommerce' ), '<a href="' . esc_url( WC_MISTERTANGO_URL_WEBSITE ) . '" target="_blank">', '</a>', '<a href="' . esc_url( WC_MISTERTANGO_URL_SUPPORT_CLIENT ) . '" target="_blank">', '</a>' );
- 		$this->order_button_text  = __( 'Checkout', 'mistertango-woocommerce' );
+ 		$this->method_description = wp_kses( sprintf( __( '%1$sSign up%2$s for Mistertango account and get your username and secret key. If you need assistance, follow instructions on %3$ssupport website%4$s.', 'woo-mistertango' ), '<a href="' . esc_url( $signup_url ) . '" target="_blank">', '</a>', '<a href="' . esc_url( $support_url ) . '" target="_blank">', '</a>' ), array(
+			'a' => array( 'href' => array(), 'target' => array() ),
+		) );
+ 		$this->order_button_text  = esc_html__( 'Checkout', 'woo-mistertango' );
  		$this->supports           = array(
  			'products',
  		);
@@ -41,16 +54,16 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 		/**
 		 * Define user set options.
 		 */
- 		$this->enabled								= $this->get_option( 'enabled', 'yes' );
- 		$this->title									= $this->get_option( 'title', __( 'Bank transfer, credit card and other', 'mistertango-woocommerce' ) );
- 		$this->description						= $this->get_option( 'description', __( 'Payments collected by Mistertango.', 'mistertango-woocommerce' ) );
- 		$this->username								= $this->get_option( 'username', '' );
- 		$this->secret_key							= $this->get_option( 'secret_key', '' );
- 		$this->market									= $this->get_option( 'market', 'LT' );
- 		$this->mistertango_language		= $this->get_option( 'mistertango_language', 'lt' );
- 		$this->auto_detect_language		= $this->get_option( 'auto_detect_language', 'no' );
- 		$this->overwrite_callback_url	= $this->get_option( 'overwrite_callback_url', 'yes' );
- 		$this->log										= $this->get_option( 'log', 'no' );
+ 		$this->enabled                 = $this->get_option( 'enabled', 'yes' );
+ 		$this->title                   = $this->get_option( 'title', esc_html__( 'Bank transfer, credit card and other', 'woo-mistertango' ) );
+ 		$this->description             = $this->get_option( 'description', esc_html__( 'Payments collected by Mistertango.', 'woo-mistertango' ) );
+ 		$this->username                = $this->get_option( 'username', '' );
+ 		$this->secret_key              = $this->get_option( 'secret_key', '' );
+ 		$this->market                  = $this->get_option( 'market', 'LT' );
+ 		$this->mistertango_language    = $this->get_option( 'mistertango_language', 'lt' );
+ 		$this->auto_detect_language    = $this->get_option( 'auto_detect_language', 'no' );
+ 		$this->overwrite_callback_url  = $this->get_option( 'overwrite_callback_url', 'yes' );
+ 		$this->log                     = $this->get_option( 'log', 'no' );
 
  		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && $this->is_available() ) {
 			$this->order_button_text = sprintf( '%1$s %2$s', $this->order_button_text, strip_tags( wc_price( $this->get_order_total() ) ) );
@@ -157,7 +170,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 	 * Generate order and payment form for window.
 	 */
  	public function process_payment( $order_id ) {
-		$this->log( sprintf( 'Order #%1$s: generating payment request form.', $order_id ) );
+		$this->log( sprintf( 'Order #%s: generating payment request form.', $order_id ) );
 
 		$order = wc_get_order( $order_id );
 		$order_description = $this->get_order_description( $order_id );
@@ -180,29 +193,29 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 		}
 
 		$payment_form_in = array(
-			'data-recipient'		=> esc_attr( $this->username ),
-			'data-lang'					=> esc_attr( $payment_window_lang ),
-			'data-payer'				=> esc_attr( version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->billing_email : $order->get_billing_email() ),
-			'data-amount'				=> esc_attr( number_format( $order->get_total(), 2, '.', ',' ) ),
-			'data-currency'			=> esc_attr( version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->get_order_currency() : $order->get_currency() ),
-			'data-description'	=> esc_attr( $order_description ),
-			'data-callback'			=> esc_attr( $encrypted_callback ),
-			'data-return'				=> esc_attr( $this->get_return_url( $order ) ),
-			'data-market'				=> esc_attr( $this->market ),
+			'data-recipient'      => esc_attr( $this->username ),
+			'data-lang'           => esc_attr( $payment_window_lang ),
+			'data-payer'          => esc_attr( version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->billing_email : $order->get_billing_email() ),
+			'data-amount'         => esc_attr( number_format( $order->get_total(), 2, '.', ',' ) ),
+			'data-currency'       => esc_attr( version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->get_order_currency() : $order->get_currency() ),
+			'data-description'    => esc_attr( $order_description ),
+			'data-callback'       => esc_attr( $encrypted_callback ),
+			'data-return'         => esc_attr( $this->get_return_url( $order ) ),
+			'data-market'         => esc_attr( $this->market ),
 		);
 
 		$payment_form_out = implode( ' ', array_map(
 			function( $v, $k ) {
-				return sprintf( '%s="%s"', $k, $v );
+				return sprintf( '%1$s="%2$s"', $k, $v );
 			},
 			$payment_form_in,
 			array_keys( $payment_form_in )
 		));
 
 		$return_data = array(
-			'result'				=> 'success',
-			'order_id'			=> $order_id,
-			'payment_form'	=> sprintf( '<div id="mistertango-payment-data" %1$s></div>', $payment_form_out ),
+			'result'          => 'success',
+			'order_id'        => $order_id,
+			'payment_form'    => sprintf( '<div id="mistertango-payment-data" %s></div>', $payment_form_out ),
 		);
 
 		echo json_encode( $return_data );
@@ -263,9 +276,9 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  					throw new Exception( sprintf( 'Order #%1$s: currencies do not match (%2$s != %3$s).', $order_id, $order_currency, $response['data']['currency'] ) );
  				}
 
- 				$this->log( sprintf( __( '%1$s: payment callback completed (%2$s) via %3$s.', 'mistertango-woocommerce' ), $this->method_title, $response['invoice'], $response['type'] ) );
+ 				$this->log( sprintf( '%1$s: payment callback completed (%2$s) via %3$s.', $this->method_title, $response['invoice'], $response['type'] ) );
 
- 				$order->add_order_note( sprintf( __( '%1$s: payment callback completed (%2$s) via %3$s.', 'mistertango-woocommerce' ), $this->method_title, $response['invoice'], $response['type'] ) );
+ 				$order->add_order_note( sprintf( esc_html__( '%1$s: payment callback completed (%2$s) via %3$s.', 'woo-mistertango' ), $this->method_title, $response['invoice'], $response['type'] ) );
  				$order->payment_complete();
 
  				echo 'OK';
