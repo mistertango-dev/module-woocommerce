@@ -108,7 +108,7 @@ return array(
 		'title'       => __( 'Overwrite Callback URL', 'mistertango-woocommerce' ),
 		'label'       => __( 'Overwrite default callback URL by ignoring it', 'mistertango-woocommerce' ),
 		'description' => __( 'If you are using Mistertango on multiple websites, you should enable this option.', 'mistertango-woocommerce' ),
-		'default'     => 'no',
+		'default'     => 'yes',
 	),
 	'log'					=> array(
 		'type'        => 'checkbox',

@@ -49,7 +49,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  		$this->market									= $this->get_option( 'market', 'LT' );
  		$this->mistertango_language		= $this->get_option( 'mistertango_language', 'lt' );
  		$this->auto_detect_language		= $this->get_option( 'auto_detect_language', 'no' );
- 		$this->overwrite_callback_url	= $this->get_option( 'overwrite_callback_url', 'no' );
+ 		$this->overwrite_callback_url	= $this->get_option( 'overwrite_callback_url', 'yes' );
  		$this->log										= $this->get_option( 'log', 'no' );
 
  		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && $this->is_available() ) {

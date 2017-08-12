@@ -3,7 +3,7 @@
  * Plugin Name: Mistertango for WooCommerce
  * Plugin URI: https://mistertango.com
  * Description: Accept credit cards, debit cards, online bank payments and Bitcoins on your WooCommerce store.
- * Version: 3.1.0
+ * Version: 3.1.2
  * Author: NovaTemple
  * Author URI: https://novatemple.com
  * License: GPLv2 or later
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Main constants.
  */
 define( 'WC_MISTERTANGO_NAME', 'Mistertango' );
-define( 'WC_MISTERTANGO_VERSION', '3.1.0' );
+define( 'WC_MISTERTANGO_VERSION', '3.1.2' );
 define( 'WC_MISTERTANGO_URL_WEBSITE', 'https://mistertango.com' );
 define( 'WC_MISTERTANGO_URL_SUPPORT_CLIENT', 'https://mistertango.freshdesk.com' );
 define( 'WC_MISTERTANGO_URL_API_JS', 'https://payment.mistertango.com/resources/scripts/mt.collect.js' );
@@ -72,19 +72,6 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		 * instance.
 		 */
 		private function __wakeup() {}
-
-		/**
-		 * Incompatible plugins.
-		 */
-		private static $incompatible_plugins = array(
-			'module-woocommerce-master/mistertango.php',
-			'module-woocommerce/mistertango.php',
-			'master/mistertango.php',
-			'mistertango/mistertango.php',
-			'mistertango-woocommerce/mistertango.php',
-			'woocommerce-mistertango/mistertango.php',
-			'woocommerce-paysera/paysera.php',
-		);
 
 		/**
 		 * Notices array.
@@ -183,17 +170,6 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 
 			if ( version_compare( WC_VERSION, WC_MISTERTANGO_MIN_WC, '<' ) ) {
 				return sprintf( __( 'The minimum %1$s version required for this plugin is %2$s.', 'mistertango-woocommerce' ), 'WooCommerce', WC_MISTERTANGO_MIN_WC ) . ' ' . sprintf( __( 'You are running version %1$s.', 'mistertango-woocommerce' ), WC_VERSION );
-			}
-
-			/**
-			 * Deactivate obsolete plugin versions.
-			 */
-			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-			foreach ( self::$incompatible_plugins as $inc_plugin ) {
-				if ( is_plugin_active( $inc_plugin ) ) {
-					deactivate_plugins( $inc_plugin );
-				}
 			}
 
 			return false;
