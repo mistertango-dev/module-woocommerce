@@ -4,8 +4,6 @@
 *.php   text eol=lf
 *.js    text eol=lf
 *.css   text eol=lf
-*.po    text eol=lf
-*.mo    text eol=lf
 *.pot   text eol=lf
 
 # Export-ignore

@@ -66,8 +66,9 @@ If you get stuck with the plugin, you can ask for help on [the plugin forum](htt
 
 Yes, community made patches, bug reports, localizations (translations) and other contributions are always welcome.
 
-* Submit your ideas and bug reports on [the plugin forum](https://wordpress.org/support/plugin/woo-mistertango).
-* Want to add a new language? Awesome! You can contribute on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/woo-mistertango).
+Submit your ideas and bug reports on [the plugin forum](https://wordpress.org/support/plugin/woo-mistertango).
+
+Want to add a new language? Awesome! You can contribute on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/woo-mistertango).
 
 ## License
 

@@ -184,7 +184,7 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		 */
 		public function plugin_action_links( $actions, $plugin_file, $plugin_data, $context ) {
 			return array_merge( array(
-				'<a href="' . esc_url( $this->get_setting_link() ) . '">' . esc_html__( 'Settings', 'woocommerce' ) . '</a>',
+				'<a href="' . esc_url( $this->get_setting_link() ) . '">' . esc_html__( 'Settings', 'woo-mistertango' ) . '</a>',
 			), $actions );
 		}
 
