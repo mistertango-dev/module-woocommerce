@@ -79,7 +79,8 @@ Want to add a new language? Awesome! You can contribute on [translate.wordpress.
 
 == Screenshots ==
 
-1. Mistertango checkout
+1. Mistertango checkout modal.
+2. Mistertango payment gateway settings.
 
 == Changelog ==
 
