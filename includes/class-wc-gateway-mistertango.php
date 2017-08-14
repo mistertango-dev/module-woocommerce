@@ -196,7 +196,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 			'data-recipient'      => esc_attr( $this->username ),
 			'data-lang'           => esc_attr( $payment_window_lang ),
 			'data-payer'          => esc_attr( version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->billing_email : $order->get_billing_email() ),
-			'data-amount'         => esc_attr( number_format( $order->get_total(), 2, '.', ',' ) ),
+			'data-amount'         => esc_attr( number_format( $order->get_total(), 2, '.', '' ) ),
 			'data-currency'       => esc_attr( version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->get_order_currency() : $order->get_currency() ),
 			'data-description'    => esc_attr( $order_description ),
 			'data-callback'       => esc_attr( $encrypted_callback ),
