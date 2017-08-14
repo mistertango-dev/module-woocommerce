@@ -204,6 +204,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 			'data-market'         => esc_attr( $this->market ),
 		);
 
+		$this->log( sprintf( 'Order #%1$s: generated payment request form attributes: %2$s', $order_id, print_r( $payment_form_in, true ) ) );
+
 		$payment_form_out = implode( ' ', array_map(
 			function( $v, $k ) {
 				return sprintf( '%1$s="%2$s"', $k, $v );
@@ -212,13 +214,15 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 			array_keys( $payment_form_in )
 		));
 
+		$payment_form = sprintf( '<div id="mistertango-payment-data" %s></div>', $payment_form_out );
+
 		$return_data = json_encode( array(
 			'result'          => 'success',
 			'order_id'        => $order_id,
-			'payment_form'    => sprintf( '<div id="mistertango-payment-data" %s></div>', $payment_form_out ),
+			'payment_form'    => $payment_form,
 		) );
 
-		$this->log( sprintf( 'Order #%1$s: generated payment request form: %2$s', $order_id, $return_data ) );
+		$this->log( sprintf( 'Order #%1$s: generated payment request form: %2$s', $order_id, $payment_form ) );
 
 		echo $return_data;
 		exit;
@@ -227,12 +231,12 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 	/**
 	 * Handle payment callback.
 	 */
- 	public function payment_callback( $request ) {
+ 	public function payment_callback() {
  		try {
-			$this->log( 'Received payment callback.' );
+			$this->log( sprintf( 'Received payment callback: %s', print_r( $_POST, true ) ) );
 
 			if ( empty( $_POST ) || ! isset( $_POST['hash'] ) ) {
-				throw new Exception( 'payment callback - empty request object.' );
+				throw new Exception( 'payment callback is empty.' );
 			}
 
 			$hash = json_decode( $this->decrypt( $_POST['hash'], $this->secret_key ), true );
@@ -244,19 +248,22 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 			$response = json_decode( $hash['custom'], true );
 
 			if ( empty( $response ) ) {
-				throw new Exception( 'payment callback - empty custom object.' );
+				throw new Exception( 'payment callback - empty custom entry.' );
 			}
 
+			$this->log( 'Payment callback decrypted.' );
+
  			if ( $response['status'] == 'paid' && $response['data']['status'] == 'CONFIRMED' ) {
+				$this->log( 'Processing payment callback.' );
+
 				list( $order_prefix, $order_id ) = explode( ' ', $response['description'] );
 				$order_id = absint( $order_id );
-
  				$order = wc_get_order( $order_id );
-
-				$this->log( sprintf( 'Order #%s: validating payment callback.', $order_id ) );
 
  				$order_currency = version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->get_order_currency() : $order->get_currency();
  				$completed_status = version_compare( WC_VERSION, '3.0.0', '<' ) ? apply_filters( 'woocommerce_order_is_paid_statuses', array( 'processing', 'completed' ) ) : wc_get_is_paid_statuses();
+
+				$this->log( sprintf( 'Order #%s: validating payment callback.', $order_id ) );
 
  				if ( $order->has_status( $completed_status ) ) {
  					throw new Exception( sprintf( 'order #%1$s is already paid (%2$s).', $order_id, $order->get_status() ) );
@@ -285,7 +292,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  			echo $msg;
  		}
 
- 		exit;
+		exit;
  	}
 
 	/**
