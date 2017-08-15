@@ -2,6 +2,8 @@
 /**
 * @package WC_Plugin_Mistertango
 * @author NovaTemple
+*
+* @since 3.0.0
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,11 +13,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * WC_Gateway_Mistertango class.
  *
+ * @class WC_Gateway_Mistertango
  * @extends WC_Payment_Gateway
+ *
+ * @since 3.0.0
  */
 class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 	/**
 	 * Constructor for the gateway.
+	 *
+	 * @since 3.0.0
 	 */
  	public function __construct() {
  		$this->id                 = 'mistertango';
@@ -42,17 +49,23 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 		/**
 		 * Load icon.
+		 *
+		 * @since 3.0.0
 		 */
  		$this->icon = apply_filters( 'woocommerce_mistertango_icon', '' );
 
 		/**
 		 * Load settings.
+		 *
+		 * @since 3.0.0
 		 */
  		$this->init_form_fields();
  		$this->init_settings();
 
 		/**
 		 * Define user set options.
+		 *
+		 * @since 3.0.0
 		 */
  		$this->enabled                 = $this->get_option( 'enabled', 'yes' );
  		$this->title                   = $this->get_option( 'title', esc_html__( 'Bank transfer, credit card and other', 'woo-mistertango' ) );
@@ -65,38 +78,55 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  		$this->overwrite_callback_url  = $this->get_option( 'overwrite_callback_url', 'yes' );
  		$this->log                     = $this->get_option( 'log', 'no' );
 
+		/**
+		 * Custom checkout button text suffix with total amount.
+		 *
+		 * @since 3.0.0
+		 */
  		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && $this->is_available() ) {
 			$this->order_button_text = sprintf( '%1$s %2$s', $this->order_button_text, strip_tags( wc_price( $this->get_order_total() ) ) );
  		}
 
 		/**
 		 * Order description separator.
+		 *
+		 * @since 3.0.0
 		 */
 		$this->order_description_separator = ' ';
 
 		/**
 		 * Save options on backend.
+		 *
+		 * @since 3.0.0
 		 */
  		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 
 		/**
 		 * Load scripts on frontend.
+		 *
+		 * @since 3.0.0
 		 */
  		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		/**
 		 * Action for callback check.
+		 *
+		 * @since 3.0.0
 		 */
  		add_action( 'woocommerce_api_' . strtolower( get_class( $this ) ), array( $this, 'payment_callback' ) );
 
 		/**
 		 * Action for thankyou message after payment.
+		 *
+		 * @since 3.0.0
 		 */
  		add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'thankyou' ) );
  	}
 
 	/**
 	 * Log message.
+	 *
+	 * @since 3.0.0
 	 */
 	public function log( $message ) {
 		if ( 'yes' === $this->log ) {
@@ -106,6 +136,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 	/**
 	 * Check if gateway is enabled and has required fields filled in.
+	 *
+	 * @since 3.0.0
 	 */
  	public function is_available() {
  		if ( 'yes' === $this->enabled && ! empty( $this->username ) && ! empty( $this->secret_key ) ) {
@@ -117,6 +149,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 	/**
 	 * Show gateway settings block.
+	 *
+	 * @since 3.0.0
 	 */
  	public function admin_options() {
  		?>
@@ -130,6 +164,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 	/**
 	 * Show settings fields.
+	 *
+	 * @since 3.0.0
 	 */
  	public function init_form_fields() {
  		$this->form_fields = require( WC_MISTERTANGO_PATH . '/includes/settings-mistertango.php' );
@@ -137,6 +173,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 	/**
 	 * Load frontend scripts.
+	 *
+	 * @since 3.0.0
 	 */
  	public function enqueue_scripts() {
  		if ( ! is_checkout() || ! $this->is_available() ) {
@@ -162,6 +200,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 	/**
 	 * Payment fields for payment window with gateway description before it.
+	 *
+	 * @since 3.0.0
 	 */
 	public function payment_fields() {
 		if ( $description = $this->get_description() ) {
@@ -173,6 +213,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 	/**
 	 * Generate order and payment form for window.
+	 *
+	 * @since 3.0.0
 	 */
  	public function process_payment( $order_id ) {
 		$this->log( sprintf( 'Order #%s: generating payment request form.', $order_id ) );
@@ -235,6 +277,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 	/**
 	 * Handle payment callback.
+	 *
+	 * @since 3.0.0
 	 */
  	public function payment_callback() {
  		try {
@@ -311,6 +355,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 	/**
 	 * Thankyou message after payment.
+	 *
+	 * @since 3.0.0
 	 */
  	public function thankyou( $order_id ) {
  		echo '';
@@ -318,6 +364,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 	/**
 	 * Get site slug for usage in order description as prefix.
+	 *
+	 * @since 3.0.0
 	 */
 	public function get_order_prefix() {
 		return sanitize_title_with_dashes( parse_url( home_url(), PHP_URL_HOST ) );
@@ -325,6 +373,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 	/**
 	 * Generate order description for usage in payment form and callback.
+	 *
+	 * @since 3.0.0
 	 */
 	public function get_order_description( $order_id ) {
 		return $this->get_order_prefix() . $this->order_description_separator . $order_id;
@@ -332,6 +382,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 	/**
 	 * Encryption function for callback.
+	 *
+	 * @since 3.0.0
 	 */
 	public function encrypt( $plain_text, $key ) {
 	  $key = str_pad( $key, 32, "\0" );
@@ -350,6 +402,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 	/**
 	 * Decryption function for callback.
+	 *
+	 * @since 3.0.0
 	 */
 	public function decrypt( $encoded_text, $key ) {
 	  $key = str_pad( $key, 32, "\0" );

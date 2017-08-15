@@ -14,6 +14,8 @@
  *
  * @package WC_Plugin_Mistertango
  * @author NovaTemple
+ *
+ * @since 3.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,6 +24,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Main constants.
+ *
+ * @since 3.0.0
  */
 define( 'WC_MISTERTANGO_NAME', 'Mistertango' );
 define( 'WC_MISTERTANGO_VERSION', '3.1.3' );
@@ -42,21 +46,31 @@ define( 'WC_MISTERTANGO_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 
 /**
  * WC_Plugin_Mistertango class.
+ *
+ * @class WC_Plugin_Mistertango
+ *
+ * @since 3.0.0
  */
 if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 	class WC_Plugin_Mistertango {
 		/**
 		 * Singleton The reference the *Singleton* instance of this class.
+		 *
+		 * @since 3.0.0
 		 */
 		private static $instance;
 
 		/**
 		 * Reference to logging class.
+		 *
+		 * @since 3.0.0
 		 */
 		private static $log;
 
 		/**
 		 * Returns the *Singleton* instance of this class.
+		 *
+		 * @since 3.0.0
 		 */
 		public static function get_instance() {
 			if ( null === self::$instance ) {
@@ -68,23 +82,31 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		/**
 		 * Private clone method to prevent cloning of the instance of the
 		 * *Singleton* instance.
+		 *
+		 * @since 3.0.0
 		 */
 		private function __clone() {}
 
 		/**
 		 * Private unserialize method to prevent unserializing of the *Singleton*
 		 * instance.
+		 *
+		 * @since 3.0.0
 		 */
 		private function __wakeup() {}
 
 		/**
 		 * Notices array.
+		 *
+		 * @since 3.0.0
 		 */
 		public $notices = array();
 
 		/**
 		 * Protected constructor to prevent creating a new instance of the
 		 * *Singleton* via the `new` operator from outside of this class.
+		 *
+		 * @since 3.0.0
 		 */
 		protected function __construct() {
 			add_action( 'admin_init', array( $this, 'check_environment' ) );
@@ -94,6 +116,8 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 
 		/**
 		 * Just log it.
+		 *
+		 * @since 3.0.0
 		 */
 		public static function log( $message ) {
 			if ( empty( self::$log ) ) {
@@ -104,11 +128,15 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 
 		/**
 		 * Init the plugin after plugins_loaded so environment variables are set.
+		 *
+		 * @since 3.0.0
 		 */
 		public function init() {
 			/**
 			 * Don't hook anything else in the plugin if we're in an incompatible
 			 * environment.
+			 *
+			 * @since 3.0.0
 			 */
 			if ( self::get_environment_warning() ) {
 				return;
@@ -116,11 +144,15 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 
 			/**
 			 * Init the gateway itself.
+			 *
+			 * @since 3.0.0
 			 */
 			$this->init_gateway();
 
 			/**
 			 * Helper links on Plugins page.
+			 *
+			 * @since 3.0.0
 			 */
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ), 10, 4 );
 			add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
@@ -129,6 +161,8 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		/**
 		 * The backup sanity check, in case the plugin is activated in a weird way,
 		 * or the environment changes after activation or it is incompatible.
+		 *
+		 * @since 3.0.0
 		 */
 		public function check_environment() {
 			$environment_warning = self::get_environment_warning();
@@ -141,6 +175,8 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 			/**
 			 * Check if username and secret key are present. Otherwise prompt, via
 			 * notice, to go to settings.
+			 *
+			 * @since 3.0.0
 			 */
 			$gateway_settings = get_option( 'woocommerce_mistertango_settings', false );
 			$is_plugin_section = isset( $_GET['page'], $_GET['section'] ) && 'wc-settings' === $_GET['page'] && $this->get_setting_section_slug() === $_GET['section'];
@@ -154,8 +190,10 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		 * Checks the environment for compatibility problems. Returns a string
 		 * with the first incompatibility found or false if the environment has
 		 * no problems.
+		 *
+		 * @since 3.0.0
 		 */
-		static function get_environment_warning() {
+		public static function get_environment_warning() {
 			if ( version_compare( phpversion(), WC_MISTERTANGO_MIN_PHP, '<' ) ) {
 				return sprintf( esc_html__( 'The minimum %1$s version required for this plugin is %2$s.', 'woo-mistertango' ), 'PHP', WC_MISTERTANGO_MIN_PHP ) . ' ' . sprintf( esc_html__( 'You are running version %s.', 'woo-mistertango' ), phpversion() );
 			}
@@ -181,6 +219,8 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 
 		/**
 		 * Adds plugin action links.
+		 *
+		 * @since 3.0.0
 		 */
 		public function plugin_action_links( $actions, $plugin_file, $plugin_data, $context ) {
 			return array_merge( array(
@@ -190,6 +230,8 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 
 		/**
 		 * Adds plugin row meta.
+		 *
+		 * @since 3.0.0
 		 */
 		public function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
 			if ( plugin_basename( __FILE__ ) == $plugin_file ) {
@@ -210,6 +252,8 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 
 		/**
 		 * Get setting section link.
+		 *
+		 * @since 3.0.0
 		 */
 		public function get_setting_link() {
 			return admin_url( 'admin.php?page=wc-settings&tab=checkout&section=' . $this->get_setting_section_slug() );
@@ -217,6 +261,8 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 
 		/**
 		 * Get setting section slug.
+		 *
+		 * @since 3.0.0
 		 */
 		public function get_setting_section_slug() {
 			return version_compare( WC_VERSION, '2.6', '>=' ) ? 'mistertango' : strtolower( 'WC_Gateway_Mistertango' );
@@ -225,6 +271,8 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		/**
 		 * Allow this class and other classes to add slug keyed notices (to avoid
 		 * duplication).
+		 *
+		 * @since 3.0.0
 		 */
 		public function add_admin_notice( $slug, $class, $message ) {
 			$this->notices[ $slug ] = array(
@@ -235,6 +283,8 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 
 		/**
 		 * Display any notices we've collected thus far.
+		 *
+		 * @since 3.0.0
 		 */
 		public function admin_notices() {
 			$notice_classes = array(
@@ -261,6 +311,8 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		/**
 		 * Initialize the gateway. Called very early - in the context of the
 		 * plugins_loaded action.
+		 *
+		 * @since 3.0.0
 		 */
 		public function init_gateway() {
 			if ( ! class_exists( 'WC_Payment_Gateway' ) ) {
@@ -276,6 +328,8 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 
 		/**
 		 * Add the gateway to WooCommerce.
+		 *
+		 * @since 3.0.0
 		 */
 		public function add_gateway( $methods ) {
 			$methods[] = 'WC_Gateway_Mistertango';
@@ -284,5 +338,10 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		}
 	}
 
+	/**
+	 * Run the plugin instance.
+	 *
+	 * @since 3.0.0
+	 */
 	$GLOBALS['wc_plugin_mistertango'] = WC_Plugin_Mistertango::get_instance();
 }

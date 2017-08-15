@@ -2,6 +2,8 @@
 /**
 * @package WC_Plugin_Mistertango
 * @author NovaTemple
+*
+* @since 3.0.0
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,6 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Settings for Mistertango payment gateway.
+ *
+ * @since 3.0.0
  */
 return array(
 	'enabled'	=> array(
