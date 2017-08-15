@@ -70,6 +70,11 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  		}
 
 		/**
+		 * Order description separator.
+		 */
+		$this->order_description_separator = ' ';
+
+		/**
 		 * Save options on backend.
 		 */
  		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
@@ -235,7 +240,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  		try {
 			$this->log( sprintf( 'Received payment callback: %s', print_r( $_POST, true ) ) );
 
-			if ( empty( $_POST ) || ! isset( $_POST['hash'] ) ) {
+			if ( empty( $_POST ) || ! isset( $_POST['callback_uuid'] ) || ! isset( $_POST['hash'] ) ) {
 				throw new Exception( 'payment callback is empty.' );
 			}
 
@@ -251,15 +256,24 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 				throw new Exception( 'payment callback - empty custom entry.' );
 			}
 
-			$this->log( 'Payment callback decrypted.' );
+			$this->log( sprintf( 'Decrypted payment callback: %s', print_r( $response, true ) ) );
 
  			if ( $response['status'] == 'paid' && $response['data']['status'] == 'CONFIRMED' ) {
-				$this->log( 'Processing payment callback.' );
+				$this->log( sprintf( 'Processing payment callback (uuid: %s).', $_POST['callback_uuid'] ) );
 
-				list( $order_prefix, $order_id ) = explode( ' ', $response['description'] );
-				$order_id = absint( $order_id );
- 				$order = wc_get_order( $order_id );
+				$order_description = explode( $this->order_description_separator, $response['description'] );
 
+				if ( 2 > count( $order_description ) ) {
+ 					throw new Exception( sprintf( 'incorrect order description (description: %s).', $response['description'] ) );
+ 				}
+
+ 				$order = wc_get_order( absint( $order_description[1] ) );
+
+				if ( false === $order ) {
+ 					throw new Exception( sprintf( 'order not found (description: %s).', $response['description'] ) );
+ 				}
+
+				$order_id = version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->id : $order->get_id();
  				$order_currency = version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->get_order_currency() : $order->get_currency();
  				$completed_status = version_compare( WC_VERSION, '3.0.0', '<' ) ? apply_filters( 'woocommerce_order_is_paid_statuses', array( 'processing', 'completed' ) ) : wc_get_is_paid_statuses();
 
@@ -277,9 +291,9 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  					throw new Exception( sprintf( 'order #%1$s currencies do not match (%2$s != %3$s).', $order_id, $order_currency, $response['data']['currency'] ) );
  				}
 
- 				$this->log( sprintf( 'Order #%1$s payment callback is valid and payment received via %2$s (%3$s).', $order_id, $response['type'], $response['invoice'] ) );
+ 				$this->log( sprintf( 'Order #%1$s payment callback is valid and payment received via %2$s (invoice: %3$s).', $order_id, $response['type'], $response['invoice'] ) );
 
- 				$order->add_order_note( sprintf( esc_html__( '%1$s: order #%2$s payment received via %3$s (%4$s).', 'woo-mistertango' ), $this->method_title, $order_id, $response['type'], $response['invoice'] ) );
+ 				$order->add_order_note( sprintf( esc_html__( '%1$s: order #%2$s payment received via %3$s (invoice: %4$s).', 'woo-mistertango' ), $this->method_title, $order_id, $response['type'], $response['invoice'] ) );
  				$order->payment_complete();
 
  				echo 'OK';
@@ -313,7 +327,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 	 * Generate order description for usage in payment form and callback.
 	 */
 	public function get_order_description( $order_id ) {
-		return sprintf( '%1$s %2$s', $this->get_order_prefix(), $order_id );
+		return $this->get_order_prefix() . $this->order_description_separator . $order_id;
 	}
 
 	/**
