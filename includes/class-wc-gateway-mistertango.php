@@ -29,14 +29,11 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 	/**
 	 * Constructor for the gateway.
 	 *
+	 * @since 3.1.3 Different support URLs based on locale.
 	 * @since 3.0.0
 	 */
  	public function __construct() {
-		/**
-		 * Different support URLs based on locale.
-		 *
-		 * @since 3.1.3
-		 */
+		// Different support URLs based on locale.
 		$signup_url = WC_MISTERTANGO_URL_WEBSITE;
 		$support_url = WC_MISTERTANGO_URL_CLIENT_SUPPORT;
 
@@ -47,11 +44,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 			$support_url = WC_MISTERTANGO_URL_CLIENT_SUPPORT_LT;
 		}
 
-		/**
-		 * General payment gateway variables.
-		 *
-		 * @since 3.0.0
-		 */
+		// General payment gateway variables.
  		$this->id                 = 'mistertango';
  		$this->has_fields         = false;
  		$this->method_title       = 'Mistertango';
@@ -63,19 +56,11 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  			'products',
  		);
 
-		/**
-		 * Load settings.
-		 *
-		 * @since 3.0.0
-		 */
+		// Load settings.
  		$this->init_form_fields();
  		$this->init_settings();
 
-		/**
-		 * Define user set options.
-		 *
-		 * @since 3.0.0
-		 */
+		// Define user set options.
  		$this->enabled                 = $this->get_option( 'enabled', 'yes' );
  		$this->title                   = $this->get_option( 'title', esc_html__( 'Bank transfer, credit card and other', 'woo-mistertango' ) );
  		$this->description             = $this->get_option( 'description', esc_html__( 'Payments collected by Mistertango.', 'woo-mistertango' ) );
@@ -87,48 +72,24 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  		$this->overwrite_callback_url  = $this->get_option( 'overwrite_callback_url', 'yes' );
  		$this->log                     = $this->get_option( 'log', 'no' );
 
-		/**
-		 * Load icon.
-		 *
-		 * @since 3.0.0
-		 */
+		// Load icon.
  		$this->icon = apply_filters( 'woocommerce_mistertango_icon', '' );
 
-		/**
-		 * Custom checkout button text suffix with total amount.
-		 *
-		 * @since 3.0.0
-		 */
+		// Custom checkout button text suffix with total amount.
  		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && $this->is_available() ) {
 			$this->order_button_text = sprintf( '%1$s %2$s', $this->order_button_text, strip_tags( wc_price( $this->get_order_total() ) ) );
  		}
 
-		/**
-		 * Save options on backend.
-		 *
-		 * @since 3.0.0
-		 */
+		// Save options on backend.
  		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 
-		/**
-		 * Load scripts on frontend.
-		 *
-		 * @since 3.0.0
-		 */
+		// Load scripts on frontend.
  		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-		/**
-		 * Action for callback check.
-		 *
-		 * @since 3.0.0
-		 */
+		// Action for callback check.
  		add_action( 'woocommerce_api_' . strtolower( get_class( $this ) ), array( $this, 'payment_callback' ) );
 
-		/**
-		 * Action for thankyou message after payment.
-		 *
-		 * @since 3.0.0
-		 */
+		// Action for thankyou message after payment.
  		add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'thankyou' ) );
  	}
 
@@ -221,7 +182,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Generate order and payment form for window.
+	 * Initialize order and payment form for window.
 	 *
 	 * @since 3.0.0
 	 */
@@ -233,11 +194,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 		$payment_window_lang = $this->mistertango_language;
 
-		/**
-		 * Auto detect locale for payment window.
-		 *
-		 * @since 3.0.0
-		 */
+		// Auto detect locale for payment window.
 		if ( 'yes' === $this->auto_detect_language ) {
 			$languages = array( 'lt', 'en', 'lv', 'et', 'ru', 'fi', 'fr', 'nl', 'it', 'es', 'uk', 'hu', 'ro', 'bg', 'cs', 'sk', 'de', );
 	 		list( $lang ) = explode( '_', get_locale() );
@@ -247,11 +204,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 			}
 		}
 
-		/**
-		 * Overwrite default callback URL.
-		 *
-		 * @since 3.0.0
-		 */
+		// Overwrite default callback URL.
 		$encrypted_callback = '';
 
 		if ( 'yes' === $this->overwrite_callback_url ) {

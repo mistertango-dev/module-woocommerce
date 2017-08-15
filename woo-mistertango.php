@@ -127,33 +127,20 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		}
 
 		/**
-		 * Init the plugin after plugins_loaded so environment variables are set.
+		 * Init the plugin and the gateway after plugins_loaded.
 		 *
 		 * @since 3.0.0
 		 */
 		public function init() {
-			/**
-			 * Don't hook anything else in the plugin if we're in an incompatible
-			 * environment.
-			 *
-			 * @since 3.0.0
-			 */
+			// Stop the plugin if we're in an incompatible environment.
 			if ( self::get_environment_warning() ) {
 				return;
 			}
 
-			/**
-			 * Init the gateway itself.
-			 *
-			 * @since 3.0.0
-			 */
+			// Init the gateway itself.
 			$this->init_gateway();
 
-			/**
-			 * Helper links on Plugins page.
-			 *
-			 * @since 3.0.0
-			 */
+			// Helper links on Plugins page.
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ), 10, 4 );
 			add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
 		}
@@ -172,12 +159,7 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 				return;
 			}
 
-			/**
-			 * Check if username and secret key are present. Otherwise prompt, via
-			 * notice, to go to settings.
-			 *
-			 * @since 3.0.0
-			 */
+			// If username or secret key are missing, prompt to go to settings.
 			$gateway_settings = get_option( 'woocommerce_mistertango_settings', false );
 			$is_plugin_section = isset( $_GET['page'], $_GET['section'] ) && 'wc-settings' === $_GET['page'] && $this->get_setting_section_slug() === $_GET['section'];
 
@@ -231,23 +213,14 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		/**
 		 * Adds plugin row meta.
 		 *
+		 * @since 3.1.3 Different support URLs based on locale.
 		 * @since 3.0.0
 		 */
 		public function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
-			/**
-			 * Plugin support link.
-			 *
-			 * @since 3.1.3
-			 */
-
-			$plugin_meta[] = '<a href="' . esc_url( WC_MISTERTANGO_URL_PLUGIN_SUPPORT ) . '" target="_blank">' . esc_html__( 'Plugin support', 'woo-mistertango' ) . '</a>';
-
-			/**
-			 * Different support URL based on locale.
-			 *
-			 * @since 3.1.3
-			 */
 			if ( plugin_basename( __FILE__ ) == $plugin_file ) {
+				$plugin_meta[] = '<a href="' . esc_url( WC_MISTERTANGO_URL_PLUGIN_SUPPORT ) . '" target="_blank">' . esc_html__( 'Plugin support', 'woo-mistertango' ) . '</a>';
+
+				// Different support URLs based on locale.
 				$support_url = WC_MISTERTANGO_URL_CLIENT_SUPPORT;
 				list( $lang ) = explode( '_', get_locale() );
 
