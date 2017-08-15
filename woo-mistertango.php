@@ -234,9 +234,20 @@ if ( ! class_exists( 'WC_Plugin_Mistertango' ) ) {
 		 * @since 3.0.0
 		 */
 		public function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
-			if ( plugin_basename( __FILE__ ) == $plugin_file ) {
-				$plugin_meta[] = '<a href="' . esc_url( WC_MISTERTANGO_URL_PLUGIN_SUPPORT ) . '" target="_blank">' . esc_html__( 'Plugin support', 'woo-mistertango' ) . '</a>';
+			/**
+			 * Plugin support link.
+			 *
+			 * @since 3.1.3
+			 */
 
+			$plugin_meta[] = '<a href="' . esc_url( WC_MISTERTANGO_URL_PLUGIN_SUPPORT ) . '" target="_blank">' . esc_html__( 'Plugin support', 'woo-mistertango' ) . '</a>';
+
+			/**
+			 * Different support URL based on locale.
+			 *
+			 * @since 3.1.3
+			 */
+			if ( plugin_basename( __FILE__ ) == $plugin_file ) {
 				$support_url = WC_MISTERTANGO_URL_CLIENT_SUPPORT;
 				list( $lang ) = explode( '_', get_locale() );
 

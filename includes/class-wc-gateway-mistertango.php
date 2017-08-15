@@ -20,14 +20,23 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 	/**
+	 * Order description separator.
+	 *
+	 * @since 3.1.4
+	 */
+	public $order_description_separator = ' ';
+
+	/**
 	 * Constructor for the gateway.
 	 *
 	 * @since 3.0.0
 	 */
  	public function __construct() {
- 		$this->id                 = 'mistertango';
- 		$this->has_fields         = false;
-
+		/**
+		 * Different support URLs based on locale.
+		 *
+		 * @since 3.1.3
+		 */
 		$signup_url = WC_MISTERTANGO_URL_WEBSITE;
 		$support_url = WC_MISTERTANGO_URL_CLIENT_SUPPORT;
 
@@ -38,6 +47,13 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 			$support_url = WC_MISTERTANGO_URL_CLIENT_SUPPORT_LT;
 		}
 
+		/**
+		 * General payment gateway variables.
+		 *
+		 * @since 3.0.0
+		 */
+ 		$this->id                 = 'mistertango';
+ 		$this->has_fields         = false;
  		$this->method_title       = 'Mistertango';
  		$this->method_description = wp_kses( sprintf( __( '%1$sSign up%2$s for Mistertango account and get your username and secret key. If you need assistance, follow instructions on %3$ssupport website%4$s.', 'woo-mistertango' ), '<a href="' . esc_url( $signup_url ) . '" target="_blank">', '</a>', '<a href="' . esc_url( $support_url ) . '" target="_blank">', '</a>' ), array(
 			'a' => array( 'href' => array(), 'target' => array() ),
@@ -46,13 +62,6 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  		$this->supports           = array(
  			'products',
  		);
-
-		/**
-		 * Load icon.
-		 *
-		 * @since 3.0.0
-		 */
- 		$this->icon = apply_filters( 'woocommerce_mistertango_icon', '' );
 
 		/**
 		 * Load settings.
@@ -79,6 +88,13 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  		$this->log                     = $this->get_option( 'log', 'no' );
 
 		/**
+		 * Load icon.
+		 *
+		 * @since 3.0.0
+		 */
+ 		$this->icon = apply_filters( 'woocommerce_mistertango_icon', '' );
+
+		/**
 		 * Custom checkout button text suffix with total amount.
 		 *
 		 * @since 3.0.0
@@ -86,13 +102,6 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && $this->is_available() ) {
 			$this->order_button_text = sprintf( '%1$s %2$s', $this->order_button_text, strip_tags( wc_price( $this->get_order_total() ) ) );
  		}
-
-		/**
-		 * Order description separator.
-		 *
-		 * @since 3.0.0
-		 */
-		$this->order_description_separator = ' ';
 
 		/**
 		 * Save options on backend.
@@ -224,6 +233,11 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 		$payment_window_lang = $this->mistertango_language;
 
+		/**
+		 * Auto detect locale for payment window.
+		 *
+		 * @since 3.0.0
+		 */
 		if ( 'yes' === $this->auto_detect_language ) {
 			$languages = array( 'lt', 'en', 'lv', 'et', 'ru', 'fi', 'fr', 'nl', 'it', 'es', 'uk', 'hu', 'ro', 'bg', 'cs', 'sk', 'de', );
 	 		list( $lang ) = explode( '_', get_locale() );
@@ -233,6 +247,11 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 			}
 		}
 
+		/**
+		 * Overwrite default callback URL.
+		 *
+		 * @since 3.0.0
+		 */
 		$encrypted_callback = '';
 
 		if ( 'yes' === $this->overwrite_callback_url ) {
