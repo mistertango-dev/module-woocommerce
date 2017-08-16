@@ -182,7 +182,9 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  			echo wpautop( wptexturize( $description ) );
  		}
 
-		echo '<div id="mistertango-payment-data-holder" style="display: none;"></div>';
+		if ( is_checkout() && ! is_checkout_pay_page() ) {
+			echo '<div id="mistertango-payment-data-holder" style="display: none;"></div>';
+		}
 	}
 
 	/**
@@ -266,7 +268,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 			$payment_form_data = json_decode( $this->process_payment( $order_id, true ), true );
 
 			if( ! empty( $payment_form_data ) && isset( $payment_form_data['result'], $payment_form_data['payment_form'] ) && 'success' === $payment_form_data['result'] ) {
-				echo $payment_form_data['payment_form'];
+				echo sprintf( '<div id="mistertango-payment-data-holder" style="display: none;">%s</div>', $payment_form_data['payment_form'] );
 			}
 		}
 	}
