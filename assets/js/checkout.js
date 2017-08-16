@@ -1,5 +1,5 @@
 jQuery( document ).ready(function( $ ) {
-	// Initialize the gateway and general triggers for payment window.
+	// Initialize the gateway JS API and general triggers for the payment window.
 	mrtango_payment_done = false;
 
 	mrTangoCollect.load();
@@ -22,15 +22,17 @@ jQuery( document ).ready(function( $ ) {
 		mrtango_payment_done = true;
 	};
 
-	// Handle payment button click action and initialize payment window.
+	// Handle a payment button click action and initialize the payment window.
 	$( document ).on( 'click', '#place_order', function( e ) {
+		// If it is not our gateway selected - skip.
 	  if( $( '#payment_method_mistertango' ).prop( 'checked' ) == false ) {
 		  return;
 	  }
 
-		// TODO: don't block default WC sanity checks on checkout form.
+		// Workaround default redirection on a payment button click.
 		e.preventDefault();
 
+		// Get and set the payment window data.
 		if( $( '#mistertango-payment-data' ).length > 0 ) {
 			mrTangoCollect.set.recipient( $( '#mistertango-payment-data' ).attr( 'data-recipient' ) );
 		  mrTangoCollect.set.lang( $( '#mistertango-payment-data' ).attr( 'data-lang' ) );
@@ -49,7 +51,7 @@ jQuery( document ).ready(function( $ ) {
 			mrTangoCollect.submit();
 		}
 		else {
-			// Get missing order data for payment window.
+			// Get missing order data for the payment window.
 			$.ajax( {
 			  url: wc_checkout_params.checkout_url,
 			  type: 'POST',
@@ -60,9 +62,11 @@ jQuery( document ).ready(function( $ ) {
 			  data : $( 'form.checkout' ).serialize()
 			} ).done( function( response ) {
 				if( response.result == 'failure' ) {
+					// Output a message on error.
 					$( 'form.checkout' ).prepend( response.messages );
 				}
 				else if( response.result == 'success' ) {
+					// Append an order payment data output and call the payment window.
 					$( '#mistertango-payment-data-holder' ).html( response.payment_form );
 					$( '#place_order' ).trigger( 'click' );
 				}

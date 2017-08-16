@@ -81,12 +81,11 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 		if ( $this->is_available() ) {
 			$order_button_total = 0;
 
-			if ( defined( 'DOING_AJAX' ) && DOING_AJAX && $order_button_total = $this->get_order_total() ) {
+			if ( defined( 'DOING_AJAX' ) && DOING_AJAX && $this->get_order_total() ) {
 				$order_button_total = $this->get_order_total();
 	 		}
 			elseif ( is_checkout_pay_page() && $order_id = absint( get_query_var( 'order-pay' ) ) ) {
 				$order = wc_get_order( $order_id );
-
 				$order_button_total = $order->get_total();
 	 		}
 
@@ -123,7 +122,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Check if gateway is enabled and has required fields filled in.
+	 * Check if the gateway is enabled and has required fields filled in.
 	 *
 	 * @since 3.0.0
 	 */
@@ -163,7 +162,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  	}
 
 	/**
-	 * Show gateway settings block.
+	 * Show the gateway settings block.
 	 *
 	 * @since 3.0.0
 	 */
@@ -187,7 +186,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  	}
 
 	/**
-	 * Payment fields for payment window with gateway description before it.
+	 * Payment fields for the payment window with the gateway description before it.
 	 *
 	 * @since 3.0.0
 	 */
@@ -224,7 +223,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 		$payment_window_lang = $this->mistertango_language;
 
-		// Auto detect locale for payment window.
+		// Auto detect locale for the payment window.
 		if ( 'yes' === $this->auto_detect_language ) {
 			$languages = array( 'lt', 'en', 'lv', 'et', 'ru', 'fi', 'fr', 'nl', 'it', 'es', 'uk', 'hu', 'ro', 'bg', 'cs', 'sk', 'de', );
 	 		list( $lang ) = explode( '_', get_locale() );
