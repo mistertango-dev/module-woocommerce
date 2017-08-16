@@ -298,46 +298,47 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 			$this->log( sprintf( 'Decrypted payment callback: %s', print_r( $response, true ) ) );
 
- 			if ( $response['status'] == 'paid' && $response['data']['status'] == 'CONFIRMED' ) {
-				$this->log( sprintf( 'Processing payment callback (uuid: %s).', $_POST['callback_uuid'] ) );
+			$this->log( sprintf( 'Processing payment callback (uuid: %s).', $_POST['callback_uuid'] ) );
 
-				$order_description = explode( $this->order_description_separator, $response['description'] );
+			$order_description = explode( $this->order_description_separator, $response['description'] );
 
-				if ( 2 > count( $order_description ) ) {
- 					throw new Exception( sprintf( 'incorrect order description (description: %s).', $response['description'] ) );
- 				}
+			if ( 2 > count( $order_description ) ) {
+				throw new Exception( sprintf( 'incorrect order description (description: %s).', $response['description'] ) );
+			}
 
- 				$order = wc_get_order( absint( $order_description[1] ) );
+			$order = wc_get_order( absint( $order_description[1] ) );
 
-				if ( false === $order ) {
- 					throw new Exception( sprintf( 'order not found (description: %s).', $response['description'] ) );
- 				}
+			if ( false === $order ) {
+				throw new Exception( sprintf( 'order not found (description: %s).', $response['description'] ) );
+			}
 
-				$order_id = version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->id : $order->get_id();
- 				$order_currency = version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->get_order_currency() : $order->get_currency();
- 				$completed_status = version_compare( WC_VERSION, '3.0.0', '<' ) ? apply_filters( 'woocommerce_order_is_paid_statuses', array( 'processing', 'completed' ) ) : wc_get_is_paid_statuses();
+			$order_id = version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->id : $order->get_id();
+			$order_currency = version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->get_order_currency() : $order->get_currency();
+			$completed_status = version_compare( WC_VERSION, '3.0.0', '<' ) ? apply_filters( 'woocommerce_order_is_paid_statuses', array( 'processing', 'completed' ) ) : wc_get_is_paid_statuses();
 
-				$this->log( sprintf( 'Order #%s: validating payment callback.', $order_id ) );
+			$this->log( sprintf( 'Order #%s: validating payment callback.', $order_id ) );
 
- 				if ( $order->has_status( $completed_status ) ) {
- 					throw new Exception( sprintf( 'order #%1$s is already paid (%2$s).', $order_id, $order->get_status() ) );
- 				}
+			if ( $order->has_status( $completed_status ) ) {
+				$this->log( sprintf( 'Order #%1$s is already paid (%2$s).', $order_id, $order->get_status() ) );
 
- 				if ( $order->get_total() != $response['data']['amount'] ) {
- 					throw new Exception( sprintf( 'order #%1$s amounts do no match (%2$s != %3$s).', $order_id, $order->get_total(), $response['data']['amount'] ) );
- 				}
+				echo 'OK';
+			}
+			else {
+				if ( $order->get_total() != $response['data']['amount'] ) {
+					throw new Exception( sprintf( 'order #%1$s amounts do no match (%2$s != %3$s).', $order_id, $order->get_total(), $response['data']['amount'] ) );
+				}
 
- 				if ( $order_currency != $response['data']['currency'] ) {
- 					throw new Exception( sprintf( 'order #%1$s currencies do not match (%2$s != %3$s).', $order_id, $order_currency, $response['data']['currency'] ) );
- 				}
+				if ( $order_currency != $response['data']['currency'] ) {
+					throw new Exception( sprintf( 'order #%1$s currencies do not match (%2$s != %3$s).', $order_id, $order_currency, $response['data']['currency'] ) );
+				}
 
- 				$this->log( sprintf( 'Order #%1$s payment callback is valid and payment received via %2$s (invoice: %3$s).', $order_id, $response['type'], $response['invoice'] ) );
+				$this->log( sprintf( 'Order #%1$s payment callback is valid and payment received via %2$s (invoice: %3$s).', $order_id, $response['type'], $response['invoice'] ) );
 
- 				$order->add_order_note( sprintf( esc_html__( '%1$s: order #%2$s payment received via %3$s (invoice: %4$s).', 'woo-mistertango' ), $this->method_title, $order_id, $response['type'], $response['invoice'] ) );
- 				$order->payment_complete();
+				$order->add_order_note( sprintf( esc_html__( '%1$s: order #%2$s payment received via %3$s (invoice: %4$s).', 'woo-mistertango' ), $this->method_title, $order_id, $response['type'], $response['invoice'] ) );
+				$order->payment_complete();
 
- 				echo 'OK';
- 			}
+				echo 'OK';
+			}
  		} catch ( Exception $e ) {
  			$msg = sprintf( '%1$s: %2$s', get_class( $e ), $e->getMessage() );
 
