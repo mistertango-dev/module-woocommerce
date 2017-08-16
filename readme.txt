@@ -3,7 +3,7 @@ Contributors: mnemotiv, mistertango
 Tags: woocommerce, mistertango, payment gateway, credit card, bitcoin, payments, bank
 Requires at least: 3.5
 Tested up to: 4.8
-Stable tag: trunk
+Stable tag: 3.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 2.0
@@ -83,6 +83,17 @@ Want to add a new language? Awesome! You can contribute on [translate.wordpress.
 2. Mistertango payment gateway settings.
 
 == Changelog ==
+
+= 3.1.4 =
+
+Release Date: August 16th, 2017
+
+* Compatibility with manually created orders.
+* Fix payment form amount formatting.
+* Improved detailed logging.
+* i18n/l10n: Moved translations to translate.wordpress.org.
+* Initial phpDocs.
+* Updated WordPress.org assets.
 
 = 3.1.3 =
 
