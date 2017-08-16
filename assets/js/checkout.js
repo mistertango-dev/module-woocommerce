@@ -24,12 +24,12 @@ jQuery( document ).ready(function( $ ) {
 
 	// Handle payment button click action and initialize payment window.
 	$( document ).on( 'click', '#place_order', function( e ) {
-		// TODO: don't block default WC sanity checks on checkout form.
-		e.preventDefault();
-
 	  if( $( '#payment_method_mistertango' ).prop( 'checked' ) == false ) {
 		  return;
 	  }
+
+		// TODO: don't block default WC sanity checks on checkout form.
+		e.preventDefault();
 
 		if( $( '#mistertango-payment-data' ).length > 0 ) {
 			mrTangoCollect.set.recipient( $( '#mistertango-payment-data' ).attr( 'data-recipient' ) );
