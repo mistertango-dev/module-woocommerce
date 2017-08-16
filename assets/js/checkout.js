@@ -1,7 +1,5 @@
 jQuery( document ).ready(function( $ ) {
-	/**
-	 * General actions for payment window.
-	 */
+	// Initialize the gateway and general triggers for payment window.
 	mrtango_payment_done = false;
 
 	mrTangoCollect.load();
@@ -24,11 +22,9 @@ jQuery( document ).ready(function( $ ) {
 		mrtango_payment_done = true;
 	};
 
-	/**
-	 * Handle payment button click action and initialize payment window.
-	 */
+	// Handle payment button click action and initialize payment window.
 	$( document ).on( 'click', '#place_order', function( e ) {
-		// TODO: don't block default WC sanity checks on form
+		// TODO: don't block default WC sanity checks on checkout form.
 		e.preventDefault();
 
 	  if( $( '#payment_method_mistertango' ).prop( 'checked' ) == false ) {
@@ -53,6 +49,7 @@ jQuery( document ).ready(function( $ ) {
 			mrTangoCollect.submit();
 		}
 		else {
+			// Get missing order data for payment window.
 			$.ajax( {
 			  url: wc_checkout_params.checkout_url,
 			  type: 'POST',

@@ -29,6 +29,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 	/**
 	 * Constructor for the gateway.
 	 *
+	 * @since 3.1.4 Action for support of manually created orders.
 	 * @since 3.1.3 Different support URLs based on locale.
 	 * @since 3.0.0
 	 */
@@ -80,11 +81,14 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 			$this->order_button_text = sprintf( '%1$s %2$s', $this->order_button_text, strip_tags( wc_price( $this->get_order_total() ) ) );
  		}
 
-		// Save options on backend.
+		// Action for saving options on backend.
  		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 
-		// Load scripts on frontend.
+		// Action for loading scripts on frontend.
  		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+		// Action for support of manually created orders.
+		add_action( 'after_woocommerce_pay', array( $this, 'process_manual_payment' ), 10, 0 );
 
 		// Action for callback check.
  		add_action( 'woocommerce_api_' . strtolower( get_class( $this ) ), array( $this, 'payment_callback' ) );
@@ -147,8 +151,8 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 	 * @since 3.0.0
 	 */
  	public function enqueue_scripts() {
- 		if ( ! is_checkout() || ! $this->is_available() ) {
- 			return;
+ 		if ( ! $this->is_available() || ! is_checkout() ) {
+			return;
  		}
 
  		wp_enqueue_script(
@@ -184,9 +188,10 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 	/**
 	 * Initialize order and payment form for window.
 	 *
+	 * @since 3.1.4 Support for manually created orders.
 	 * @since 3.0.0
 	 */
- 	public function process_payment( $order_id ) {
+ 	public function process_payment( $order_id, $return_result = false ) {
 		$this->log( sprintf( 'Order #%s: generating payment request form.', $order_id ) );
 
 		$order = wc_get_order( $order_id );
@@ -243,9 +248,28 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 
 		$this->log( sprintf( 'Order #%1$s: generated payment request form: %2$s', $order_id, $payment_form ) );
 
+		if ( $return_result ) {
+			return $return_data;
+		}
+
 		echo $return_data;
 		exit;
  	}
+
+	/**
+	 * Initialize order and payment form for window of manually created order.
+	 *
+	 * @since 3.1.4
+	 */
+	public function process_manual_payment() {
+		if ( is_checkout_pay_page() && $order_id = absint( get_query_var( 'order-pay' ) ) ) {
+			$payment_form_data = json_decode( $this->process_payment( $order_id, true ), true );
+
+			if( ! empty( $payment_form_data ) && isset( $payment_form_data['result'], $payment_form_data['payment_form'] ) && 'success' === $payment_form_data['result'] ) {
+				echo $payment_form_data['payment_form'];
+			}
+		}
+	}
 
 	/**
 	 * Handle payment callback.
@@ -256,7 +280,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  		try {
 			$this->log( sprintf( 'Received payment callback: %s', print_r( $_POST, true ) ) );
 
-			if ( empty( $_POST ) || ! isset( $_POST['callback_uuid'] ) || ! isset( $_POST['hash'] ) ) {
+			if ( empty( $_POST ) || ! isset( $_POST['callback_uuid'], $_POST['hash'] ) ) {
 				throw new Exception( 'payment callback is empty.' );
 			}
 
