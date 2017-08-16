@@ -29,6 +29,7 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 	/**
 	 * Constructor for the gateway.
 	 *
+	 * @since 3.1.6 Payment button text suffix for manually created orders.
 	 * @since 3.1.4 Action for support of manually created orders.
 	 * @since 3.1.3 Different support URLs based on locale.
 	 * @since 3.0.0
@@ -77,24 +78,37 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  		$this->icon = apply_filters( 'woocommerce_mistertango_icon', '' );
 
 		// Custom checkout button text suffix with total amount.
- 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && $this->is_available() ) {
-			$this->order_button_text = sprintf( '%1$s %2$s', $this->order_button_text, strip_tags( wc_price( $this->get_order_total() ) ) );
- 		}
+		if ( $this->is_available() ) {
+			$order_button_total = 0;
 
-		// Action for saving options on backend.
- 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+			if ( defined( 'DOING_AJAX' ) && DOING_AJAX && $order_button_total = $this->get_order_total() ) {
+				$order_button_total = $this->get_order_total();
+	 		}
+			elseif ( is_checkout_pay_page() && $order_id = absint( get_query_var( 'order-pay' ) ) ) {
+				$order = wc_get_order( $order_id );
+
+				$order_button_total = $order->get_total();
+	 		}
+
+			if ( 0 < $order_button_total ) {
+				$this->order_button_text = sprintf( '%1$s %2$s', $this->order_button_text, strip_tags( wc_price( $order_button_total ) ) );
+			}
+		}
 
 		// Action for loading scripts on frontend.
- 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+ 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10, 0 );
+
+		// Action for saving options on backend.
+ 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ), 10, 0 );
 
 		// Action for support of manually created orders.
 		add_action( 'after_woocommerce_pay', array( $this, 'process_manual_payment' ), 10, 0 );
 
-		// Action for callback check.
- 		add_action( 'woocommerce_api_' . strtolower( get_class( $this ) ), array( $this, 'payment_callback' ) );
-
 		// Action for thankyou message after payment.
- 		add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'thankyou' ) );
+ 		add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'thankyou' ), 10, 1 );
+
+		// Action for callback check.
+ 		add_action( 'woocommerce_api_' . strtolower( get_class( $this ) ), array( $this, 'payment_callback' ), 10, 0 );
  	}
 
 	/**
@@ -122,6 +136,33 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  	}
 
 	/**
+	 * Load frontend scripts.
+	 *
+	 * @since 3.0.0
+	 */
+ 	public function enqueue_scripts() {
+ 		if ( ! is_checkout() || ! $this->is_available() ) {
+			return;
+ 		}
+
+ 		wp_enqueue_script(
+ 			'wc-mistertango-api',
+ 			WC_MISTERTANGO_URL_API_JS,
+ 			array( 'jquery' ),
+ 			time(),
+ 			true
+ 		);
+
+ 		wp_enqueue_script(
+ 			'wc-mistertango-checkout',
+ 			WC_MISTERTANGO_URL . '/assets/js/checkout.js',
+ 			array( 'jquery', 'wc-mistertango-api' ),
+ 			WC_MISTERTANGO_VERSION,
+ 			true
+ 		);
+ 	}
+
+	/**
 	 * Show gateway settings block.
 	 *
 	 * @since 3.0.0
@@ -146,33 +187,6 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  	}
 
 	/**
-	 * Load frontend scripts.
-	 *
-	 * @since 3.0.0
-	 */
- 	public function enqueue_scripts() {
- 		if ( ! $this->is_available() || ! is_checkout() ) {
-			return;
- 		}
-
- 		wp_enqueue_script(
- 			'wc-mistertango-api',
- 			WC_MISTERTANGO_URL_API_JS,
- 			array( 'jquery' ),
- 			time(),
- 			true
- 		);
-
- 		wp_enqueue_script(
- 			'wc-mistertango-checkout',
- 			WC_MISTERTANGO_URL . '/assets/js/checkout.js',
- 			array( 'jquery', 'wc-mistertango-api' ),
- 			WC_MISTERTANGO_VERSION,
- 			true
- 		);
- 	}
-
-	/**
 	 * Payment fields for payment window with gateway description before it.
 	 *
 	 * @since 3.0.0
@@ -186,6 +200,15 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
 			echo '<div id="mistertango-payment-data-holder" style="display: none;"></div>';
 		}
 	}
+
+	/**
+	 * Thankyou message after payment.
+	 *
+	 * @since 3.0.0
+	 */
+ 	public function thankyou( $order_id ) {
+ 		echo '';
+ 	}
 
 	/**
 	 * Initialize order and payment form for window.
@@ -350,15 +373,6 @@ class WC_Gateway_Mistertango extends WC_Payment_Gateway {
  		}
 
 		exit;
- 	}
-
-	/**
-	 * Thankyou message after payment.
-	 *
-	 * @since 3.0.0
-	 */
- 	public function thankyou( $order_id ) {
- 		echo '';
  	}
 
 	/**
